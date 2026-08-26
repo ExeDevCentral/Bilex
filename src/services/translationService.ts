@@ -16,7 +16,7 @@ async function translateWithGeminiClient(
     throw new Error('Ingresa tu API Key de Google Gemini en la Configuración. Obtenela 100% gratis en aistudio.google.com.');
   }
 
-  const model = config.model || 'gemini-2.0-flash';
+  const model = config.model || 'gemini-3.6-flash';
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
   const prompt = `Translate the following JSON array of paragraphs from ${config.sourceLang} to ${config.targetLang}.

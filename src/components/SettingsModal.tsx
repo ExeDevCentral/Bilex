@@ -41,7 +41,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       ...prev,
       provider,
       apiKey: provider === 'mock' ? '' : prev.apiKey,
-      model: provider === 'gemini' ? 'gemini-2.0-flash' : provider === 'groq' ? 'llama-3.3-70b-versatile' : prev.model,
+      model: provider === 'gemini' ? 'gemini-3.6-flash' : provider === 'groq' ? 'llama-3.3-70b-versatile' : prev.model,
     }));
   };
 
@@ -84,12 +84,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       } else {
         // Direct client test
         if (localConfig.provider === 'gemini') {
-          const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${localConfig.model || 'gemini-2.0-flash'}:generateContent?key=${localConfig.apiKey}`;
+          const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${localConfig.model || 'gemini-3.6-flash'}:generateContent?key=${localConfig.apiKey}`;
           response = await fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              contents: [{ role: 'user', parts: [{ text: 'Translate ["Hello world"] to Spanish as JSON array' }] }],
+              contents: [{ role: 'user', parts: [{ text: 'Translate ["Hello world"] to Spanish as JSON array of strings' }] }],
               generationConfig: { responseMimeType: 'application/json' },
             }),
           });
@@ -226,7 +226,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   style={{ width: '100%', paddingLeft: 36 }}
                   placeholder={
                     localConfig.provider === 'gemini'
-                      ? 'AIzaSy...'
+                      ? 'AQ.Ab8RN... o AIzaSy...'
                       : localConfig.provider === 'groq'
                       ? 'gsk_...'
                       : localConfig.provider === 'deepl'
@@ -251,7 +251,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </div>
               <p className="form-hint">
                 {localConfig.provider === 'gemini' 
-                  ? '💡 Entrá a Google AI Studio con tu cuenta de Gmail, tocá "Get API key" y pegala acá en 10 segundos.'
+                  ? '💡 Tu clave de Google AI Studio / Gemini está lista para traducir con gemini-3.6-flash.'
                   : 'Tu API Key se almacena de forma segura en tu navegador (localStorage) o en variables de entorno Vercel.'}
               </p>
             </div>
@@ -263,12 +263,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               <label className="form-label">Modelo de Gemini:</label>
               <select
                 className="form-input"
-                value={localConfig.model || 'gemini-2.0-flash'}
+                value={localConfig.model || 'gemini-3.6-flash'}
                 onChange={(e) => setLocalConfig({ ...localConfig, model: e.target.value })}
               >
-                <option value="gemini-2.0-flash">gemini-2.0-flash (Recomendado: Máxima velocidad y fluidez)</option>
-                <option value="gemini-1.5-flash">gemini-1.5-flash (Excelente para textos largos)</option>
-                <option value="gemini-1.5-pro">gemini-1.5-pro (Máxima calidad analítica)</option>
+                <option value="gemini-3.6-flash">gemini-3.6-flash (Recomendado: Máxima velocidad y calidad)</option>
+                <option value="gemini-3.7-flash">gemini-3.7-flash (Último modelo de razonamiento)</option>
+                <option value="gemini-3.5-flash">gemini-3.5-flash</option>
               </select>
             </div>
           )}

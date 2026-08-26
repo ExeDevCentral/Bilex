@@ -20,12 +20,12 @@ const STORAGE_CONFIG_KEY = 'dualdoc_translation_config';
 const STORAGE_THEME_KEY = 'dualdoc_theme';
 
 const DEFAULT_CONFIG: TranslationConfig = {
-  provider: 'deepl',
+  provider: 'gemini',
   sourceLang: 'AUTO',
   targetLang: 'ES',
   apiKey: '',
   useServerless: true,
-  model: 'gpt-4o-mini',
+  model: 'gemini-3.6-flash',
 };
 
 export const App: React.FC = () => {

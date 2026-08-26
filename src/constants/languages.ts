@@ -28,12 +28,12 @@ export const OCR_LANGUAGES = [
 export const PROVIDER_INFO = {
   gemini: {
     name: 'Google Gemini API (Recomendado)',
-    description: '100% Gratis con tu cuenta de Google en Google AI Studio. Sin tarjeta de crédito. Traducciones contextuales excelentes con Gemini 2.0 / 1.5 Flash.',
+    description: '100% Gratis con tu cuenta de Google en Google AI Studio. Sin tarjeta de crédito. Traducciones contextuales ultrarrápidas con Gemini 3.6 Flash.',
     requiresKey: true,
-    freeTier: 'Gratis (15 RPM / 1M tokens/día sin tarjeta)',
+    freeTier: 'Gratis (15 RPM / 1M tokens/día)',
     keyUrl: 'https://aistudio.google.com/app/apikey',
     keyLinkText: 'Obtener Gemini Key gratis (Google AI Studio)',
-    defaultModel: 'gemini-2.0-flash',
+    defaultModel: 'gemini-3.6-flash',
   },
   groq: {
     name: 'Groq (Llama 3.3 70B)',

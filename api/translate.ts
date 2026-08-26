@@ -43,7 +43,7 @@ export default async function handler(req: any, res: any) {
         });
       }
 
-      const selectedModel = model || 'gemini-2.0-flash';
+      const selectedModel = model || 'gemini-3.6-flash';
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${geminiKey}`;
 
       const prompt = `Translate the following JSON array of paragraphs from ${sourceLang} to ${targetLang}.
