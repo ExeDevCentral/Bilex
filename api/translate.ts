@@ -1,3 +1,5 @@
+declare const process: { env: Record<string, string | undefined> };
+
 // Vercel Serverless Function: /api/translate
 export default async function handler(req: any, res: any) {
   // CORS Headers
@@ -205,7 +207,6 @@ ${JSON.stringify(texts)}`;
     // 5. Mock / Demo Mode
     if (provider === 'mock') {
       const mockTranslations = texts.map((t: string) => {
-        // Smart mock translation simulation
         return `[Traducción al ${targetLang}]: ${t}`;
       });
       return res.status(200).json({ translations: mockTranslations, provider: 'mock' });
