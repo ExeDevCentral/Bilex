@@ -25,7 +25,7 @@ export function exportBilingualPDF(
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(14);
   doc.setFont('helvetica', 'bold');
-  doc.text('DualDoc — Lectura y Traducción Bilingüe', 14, 12);
+  doc.text('Bilex — Lectura y Traducción Bilingüe', 14, 12);
 
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
@@ -72,7 +72,7 @@ export function exportBilingualPDF(
       doc.setFontSize(8);
       doc.setTextColor(148, 163, 184); // Slate 400
       doc.text(
-        `Página ${data.pageNumber} | Generado con DualDoc`,
+        `Página ${data.pageNumber} | Generado con Bilex`,
         pageWidth / 2,
         doc.internal.pageSize.getHeight() - 8,
         { align: 'center' }
@@ -82,7 +82,7 @@ export function exportBilingualPDF(
 
   // 4. Save file
   const baseName = metadata.fileName.replace(/\.[^/.]+$/, '');
-  doc.save(`${baseName}_traduccion_bilingue.pdf`);
+  doc.save(`${baseName}_bilingue_bilex.pdf`);
 }
 
 /**
@@ -124,7 +124,7 @@ export function exportPlainText(
 export function exportMarkdown(pairs: ParagraphPair[], metadata: DocumentMetadata): void {
   const baseName = metadata.fileName.replace(/\.[^/.]+$/, '');
   let md = `# Traducción Bilingüe: ${metadata.fileName}\n\n`;
-  md += `*Fecha: ${new Date().toLocaleString()} | Palabras: ${metadata.totalWords}*\n\n`;
+  md += `*Fecha: ${new Date().toLocaleString()} | Palabras: ${metadata.totalWords} | Generado con Bilex*\n\n`;
   md += `| # | Original | Traducción |\n`;
   md += `|---|---|---|\n`;
 
@@ -144,6 +144,7 @@ export function exportMarkdown(pairs: ParagraphPair[], metadata: DocumentMetadat
 export function exportProjectJSON(pairs: ParagraphPair[], metadata: DocumentMetadata): void {
   const baseName = metadata.fileName.replace(/\.[^/.]+$/, '');
   const data = {
+    app: 'Bilex',
     version: '1.0',
     exportedAt: new Date().toISOString(),
     metadata,
@@ -151,7 +152,7 @@ export function exportProjectJSON(pairs: ParagraphPair[], metadata: DocumentMeta
   };
 
   downloadFile(
-    `${baseName}_dualdoc_session.json`,
+    `${baseName}_bilex_session.json`,
     JSON.stringify(data, null, 2),
     'application/json;charset=utf-8'
   );

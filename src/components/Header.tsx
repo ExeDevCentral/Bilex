@@ -51,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
         <div>
           <h1 className="brand-title">
-            Dual<span className="gradient-text">Doc</span>
+            Bi<span className="gradient-text">lex</span>
           </h1>
           <p className="brand-subtitle">Lectura y Traducción Bilingüe</p>
         </div>

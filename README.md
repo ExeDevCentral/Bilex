@@ -1,32 +1,121 @@
-# React + TypeScript + Vite
+# 📖 Bilex — Traductor de PDFs e Imágenes con Lectura Bilingüe
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+[![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel)](https://dualdoc-translate.vercel.app)
+[![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-6.x-646cff?style=for-the-badge&logo=vite)](https://vite.dev/)
+[![Tesseract.js](https://img.shields.io/badge/OCR-Tesseract_WASM-blueviolet?style=for-the-badge)](https://tesseract.projectnaptha.com/)
 
-Currently, two official plugins are available:
+**Bilex** es una aplicación web personal diseñada para traducir documentos completos (PDFs e imágenes) con una **vista dual tipo lectura bilingüe** (original a la izquierda, traducción a la derecha, alineados párrafo a párrafo con scroll sincronizado).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+👉 **Live Demo:** [https://dualdoc-translate.vercel.app](https://dualdoc-translate.vercel.app)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Características Principales
 
-## Expanding the Oxlint configuration
+### 1. 📄 Extracción Universal de Documentos
+- **PDFs Digitales**: Extracción directa y estructuración de texto con `pdfjs-dist`.
+- **PDFs Escaneados**: Detección automática de páginas sin texto, renderizado en alta definición y OCR mediante `tesseract.js` (WebAssembly corriendo 100% en el navegador).
+- **Múltiples Fotos / Imágenes (JPG, PNG, WebP)**:
+  - Subida simultánea de varias páginas o fotos.
+  - Galería interactiva con miniaturas para reordenar páginas (⬅️ / ➡️) antes de procesar.
+  - **Compilador Fotos → PDF**: ajusta cada imagen a formato A4 sin distorsión.
+  - Opción para descargar directamente el PDF ordenado de fotos sin necesidad de traducir.
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+### 2. 🌐 Auto-Detección de Idioma
+- Detección offline instantánea en el cliente basada en n-gramas usando `franc-min`.
+- Muestra el idioma detectado con selector rápido para ajustes manuales.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+### 3. 🤖 Motores de Traducción Modulares & Serverless
+- Función Serverless en `/api/translate` para proteger las API Keys y evitar bloqueos de CORS.
+- Soporte para múltiples proveedores:
+  - **DeepL API** *(Recomendado por defecto)*
+  - **OpenAI API** (`gpt-4o-mini`, `gpt-4o`)
+  - **Anthropic Claude API** (`claude-3-5-haiku`, `claude-3-5-sonnet`)
+  - **LibreTranslate** (instancia pública u hospedada)
+  - **Modo Demo / Mock** (traducciones simuladas offline sin costo ni keys)
+- Procesamiento en lotes (chunks) para respetar límites de caracteres y cuotas de API.
+
+### 4. 📖 Lector Bilingüe Dual Sincronizado
+- Cuadrícula 50/50 responsiva (adaptable a 1 columna en móviles).
+- Alineación estricta párrafo a párrafo (`#1`, `#2`, `#3`...).
+- Resaltado interactivo simultáneo al hacer clic o pasar el cursor sobre cualquier párrafo.
+- Búsqueda y filtrado en tiempo real con contador de coincidencias.
+- Controles de zoom de tipografía (12px a 22px).
+- **Edición in-situ**: corregí cualquier párrafo traducido a mano y guardalo al instante (badge `Editado`).
+- Botones para copiar párrafos individuales o el documento completo.
+
+### 5. 💾 Exportación Multi-Formato
+- **PDF Bilingüe a 2 Columnas**: documento A4 listo para imprimir o leer, con encabezado y tabla alineada (`jspdf` + `jspdf-autotable`).
+- **PDF Original de Fotos**: descarga el PDF unificado de las imágenes escaneadas.
+- **Texto Plano (.txt)**: opciones para solo traducción o intercalado bilingüe.
+- **Markdown Bilingüe (.md)**: tabla comparativa para Obsidian, Notion o GitHub.
+- **Sesión JSON**: guardá y reanudá tu proyecto en cualquier momento sin volver a traducir.
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+- **Frontend**: React 19, TypeScript, Vite.
+- **Estilos**: Vanilla CSS modular con tema oscuro/claro, tipografía Google Fonts (Inter / Outfit) y micro-interacciones.
+- **Iconos**: Lucide React.
+- **Extracción de PDF**: `pdfjs-dist` (Mozilla PDF.js).
+- **OCR WebAssembly**: `tesseract.js`.
+- **Generación de PDFs**: `jspdf` y `jspdf-autotable`.
+- **Detección de Idioma**: `franc-min`.
+- **Backend Serverless**: Vercel Serverless Functions (`/api/translate`).
+
+---
+
+## 🚀 Inicio Rápido Local
+
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/ExeDevCentral/Bilex.git
+cd Bilex
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+### 2. Instalar dependencias
+```bash
+npm install
+```
+
+### 3. Iniciar servidor de desarrollo
+```bash
+npm run dev
+```
+Abrí [http://localhost:5173](http://localhost:5173) en tu navegador.
+
+---
+
+## ☁️ Despliegue en Vercel
+
+1. Subí el proyecto a GitHub.
+2. Importalo en tu cuenta de [Vercel](https://vercel.com).
+3. En **Settings > Environment Variables**, agregá tus claves según el motor que desees:
+   - `DEEPL_API_KEY`: Tu clave de DeepL API (ej: `xxxx-xxxx:fx`).
+   - `OPENAI_API_KEY`: Tu clave de OpenAI.
+   - `ANTHROPIC_API_KEY`: Tu clave de Anthropic.
+4. Desplegá el proyecto. Vercel configurará automáticamente el frontend Vite y el endpoint serverless `/api/translate`.
+
+---
+
+## 🖥️ Crear Acceso Directo de Escritorio (App Nativa en Windows)
+
+Para usar Bilex como si fuera una aplicación instalada (sin barras de navegador ni pestañas):
+
+1. Creá un acceso directo en tu Escritorio.
+2. En la ubicación ingresá:
+   ```cmd
+   "C:\Program Files\Google\Chrome\Application\chrome.exe" --app=https://dualdoc-translate.vercel.app
+   ```
+   *(O reemplazá con la ruta a `msedge.exe` si usás Edge)*.
+3. Nombralo **Bilex** o **Traductor PDF**.
+4. ¡Al hacer doble clic se abrirá directamente en modo ventana limpia!
+
+---
+
+## 📄 Licencia
+
+Desarrollado para uso personal. Distribuido bajo licencia MIT.
