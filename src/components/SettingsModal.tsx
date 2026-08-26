@@ -132,7 +132,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       <div className="modal-card" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <Sliders size={20} color="var(--accent-primary)" />
+            <Sliders size={20} color="var(--accent-primary-light)" />
             <h3>Configuración de Traducción</h3>
           </div>
           <button className="btn btn-ghost btn-icon" onClick={onClose}>
@@ -141,7 +141,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         </div>
 
         <div className="modal-body">
-          {/* Provider Selection */}
+          {/* Provider Selection Grid */}
           <div className="form-group">
             <label className="form-label">Proveedor de Traducción:</label>
             <div className="provider-grid">
@@ -152,14 +152,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   className={`provider-card ${localConfig.provider === prov ? 'is-selected' : ''}`}
                   onClick={() => handleProviderSelect(prov)}
                 >
-                  <strong style={{ display: 'block', fontSize: '0.85rem' }}>
+                  <strong className="provider-card-title">
                     {prov === 'deepl' && 'DeepL (Default)'}
                     {prov === 'openai' && 'OpenAI (GPT)'}
                     {prov === 'claude' && 'Anthropic (Claude)'}
                     {prov === 'libretranslate' && 'LibreTranslate'}
                     {prov === 'mock' && 'Modo Demo (Mock)'}
                   </strong>
-                  <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)' }}>
+                  <span className="provider-card-desc">
                     {PROVIDER_INFO[prov].freeTier}
                   </span>
                 </button>
@@ -167,32 +167,32 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             </div>
           </div>
 
-          <div
-            style={{
-              padding: '12px 16px',
-              background: 'var(--bg-secondary)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--border-subtle)',
-              fontSize: '0.825rem',
-            }}
-          >
-            <strong style={{ color: 'var(--accent-primary)' }}>{currentProviderInfo.name}: </strong>
-            <span style={{ color: 'var(--text-muted)' }}>{currentProviderInfo.description}</span>
+          {/* Provider Info Banner */}
+          <div className="provider-info-box">
+            <strong>{currentProviderInfo.name}: </strong>
+            <span>{currentProviderInfo.description}</span>
           </div>
 
-          {/* API Key Input if required */}
+          {/* API Key Input */}
           {localConfig.provider !== 'mock' && (
             <div className="form-group">
-              <label className="form-label" style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <label className="form-label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span>API Key de {PROVIDER_INFO[localConfig.provider].name}:</span>
                 {localConfig.provider === 'deepl' && (
                   <a
                     href="https://www.deepl.com/pro-api"
                     target="_blank"
                     rel="noreferrer"
-                    style={{ color: 'var(--accent-primary)', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: 4 }}
+                    style={{ 
+                      color: 'var(--accent-primary-light)', 
+                      fontSize: '0.78rem', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: 4,
+                      textDecoration: 'underline'
+                    }}
                   >
-                    Obtener DeepL Key gratis <ExternalLink size={11} />
+                    Obtener DeepL Key gratis <ExternalLink size={12} />
                   </a>
                 )}
               </label>
@@ -200,7 +200,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 <input
                   type="password"
                   className="form-input"
-                  style={{ width: '100%', paddingLeft: 34 }}
+                  style={{ width: '100%', paddingLeft: 36 }}
                   placeholder={
                     localConfig.provider === 'deepl'
                       ? 'ej: 12345678-abcd-...:fx'
@@ -215,10 +215,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   size={16}
                   style={{
                     position: 'absolute',
-                    left: 10,
+                    left: 12,
                     top: '50%',
                     transform: 'translateY(-50%)',
-                    color: 'var(--text-dim)',
+                    color: 'var(--text-muted)',
                   }}
                 />
               </div>
@@ -274,7 +274,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 checked={localConfig.useServerless}
                 onChange={(e) => setLocalConfig({ ...localConfig, useServerless: e.target.checked })}
               />
-              <span style={{ fontSize: '0.85rem' }}>
+              <span style={{ fontSize: '0.85rem', color: 'var(--text-main)' }}>
                 Usar endpoint serverless <code>/api/translate</code> (Vercel)
               </span>
             </label>
@@ -290,7 +290,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 padding: '10px 14px',
                 borderRadius: 'var(--radius-md)',
                 background: testStatus.success ? 'var(--success-bg)' : 'var(--danger-bg)',
-                border: `1px solid ${testStatus.success ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.3)'}`,
+                border: `1px solid ${testStatus.success ? 'rgba(16,185,129,0.4)' : 'rgba(239,68,68,0.4)'}`,
                 color: testStatus.success ? 'var(--success)' : 'var(--danger)',
                 fontSize: '0.825rem',
                 display: 'flex',
