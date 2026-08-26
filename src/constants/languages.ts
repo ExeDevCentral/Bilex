@@ -26,11 +26,31 @@ export const OCR_LANGUAGES = [
 ];
 
 export const PROVIDER_INFO = {
+  gemini: {
+    name: 'Google Gemini API (Recomendado)',
+    description: '100% Gratis con tu cuenta de Google en Google AI Studio. Sin tarjeta de crédito. Traducciones contextuales excelentes con Gemini 2.0 / 1.5 Flash.',
+    requiresKey: true,
+    freeTier: 'Gratis (15 RPM / 1M tokens/día sin tarjeta)',
+    keyUrl: 'https://aistudio.google.com/app/apikey',
+    keyLinkText: 'Obtener Gemini Key gratis (Google AI Studio)',
+    defaultModel: 'gemini-2.0-flash',
+  },
+  groq: {
+    name: 'Groq (Llama 3.3 70B)',
+    description: '100% Gratis en console.groq.com. Velocidad extrema en chips LPU y traducción fluida de alta calidad con Llama 3.3.',
+    requiresKey: true,
+    freeTier: 'Gratis sin tarjeta de crédito',
+    keyUrl: 'https://console.groq.com/keys',
+    keyLinkText: 'Obtener Groq Key gratis (Groq Cloud)',
+    defaultModel: 'llama-3.3-70b-versatile',
+  },
   deepl: {
     name: 'DeepL API',
     description: 'La más alta calidad y fluidez natural para traducciones generales y académicas.',
     requiresKey: true,
     freeTier: '500.000 caracteres / mes gratis',
+    keyUrl: 'https://www.deepl.com/pro-api',
+    keyLinkText: 'Obtener DeepL Key gratis',
     defaultUrl: 'https://api-free.deepl.com/v2/translate',
   },
   openai: {
@@ -38,6 +58,8 @@ export const PROVIDER_INFO = {
     description: 'Excelente para documentos técnicos y comprensión profunda del contexto.',
     requiresKey: true,
     freeTier: 'De pago por token (muy económico con mini)',
+    keyUrl: 'https://platform.openai.com/api-keys',
+    keyLinkText: 'Obtener OpenAI Key',
     defaultModel: 'gpt-4o-mini',
   },
   claude: {
@@ -45,6 +67,8 @@ export const PROVIDER_INFO = {
     description: 'Traducciones estilizadas con máximo rigor contextual y terminología especializada.',
     requiresKey: true,
     freeTier: 'De pago por token',
+    keyUrl: 'https://console.anthropic.com/',
+    keyLinkText: 'Obtener Anthropic Key',
     defaultModel: 'claude-3-5-haiku-20241022',
   },
   libretranslate: {
@@ -52,7 +76,7 @@ export const PROVIDER_INFO = {
     description: 'Sin dependencias corporativas. Instancia pública u hospedaje propio.',
     requiresKey: false,
     freeTier: 'Gratis / Open Source',
-    defaultUrl: 'https://libretranslate.com/translate',
+    defaultUrl: 'https://translate.argosopentech.com/translate',
   },
   mock: {
     name: 'Modo Demo / Offline Mock',

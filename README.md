@@ -30,7 +30,9 @@
 ### 3. 🤖 Motores de Traducción Modulares & Serverless
 - Función Serverless en `/api/translate` para proteger las API Keys y evitar bloqueos de CORS.
 - Soporte para múltiples proveedores:
-  - **DeepL API** *(Recomendado por defecto)*
+  - **Google Gemini API** *(100% Gratis sin tarjeta en Google AI Studio con Gemini 2.0 / 1.5 Flash)*
+  - **Groq API** *(100% Gratis ultra-rápido en console.groq.com con Llama 3.3)*
+  - **DeepL API** *(500k caracteres/mes)*
   - **OpenAI API** (`gpt-4o-mini`, `gpt-4o`)
   - **Anthropic Claude API** (`claude-3-5-haiku`, `claude-3-5-sonnet`)
   - **LibreTranslate** (instancia pública u hospedada)
@@ -94,9 +96,11 @@ Abrí [http://localhost:5173](http://localhost:5173) en tu navegador.
 1. Subí el proyecto a GitHub.
 2. Importalo en tu cuenta de [Vercel](https://vercel.com).
 3. En **Settings > Environment Variables**, agregá tus claves según el motor que desees:
-   - `DEEPL_API_KEY`: Tu clave de DeepL API (ej: `xxxx-xxxx:fx`).
-   - `OPENAI_API_KEY`: Tu clave de OpenAI.
-   - `ANTHROPIC_API_KEY`: Tu clave de Anthropic.
+   - `GEMINI_API_KEY`: Clave de Google AI Studio (gratis).
+   - `GROQ_API_KEY`: Clave de Groq (gratis).
+   - `DEEPL_API_KEY`: Clave de DeepL API.
+   - `OPENAI_API_KEY`: Clave de OpenAI.
+   - `ANTHROPIC_API_KEY`: Clave de Anthropic.
 4. Desplegá el proyecto. Vercel configurará automáticamente el frontend Vite y el endpoint serverless `/api/translate`.
 
 ---

@@ -8,7 +8,8 @@ import {
   ExternalLink, 
   Globe, 
   ShieldCheck, 
-  Sliders 
+  Sliders,
+  Sparkles
 } from 'lucide-react';
 import type { TranslationConfig, TranslationProvider } from '../types';
 import { PROVIDER_INFO } from '../constants/languages';
@@ -40,6 +41,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       ...prev,
       provider,
       apiKey: provider === 'mock' ? '' : prev.apiKey,
+      model: provider === 'gemini' ? 'gemini-2.0-flash' : provider === 'groq' ? 'llama-3.3-70b-versatile' : prev.model,
     }));
   };
 
@@ -81,7 +83,18 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         }
       } else {
         // Direct client test
-        if (localConfig.provider === 'deepl') {
+        if (localConfig.provider === 'gemini') {
+          const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${localConfig.model || 'gemini-2.0-flash'}:generateContent?key=${localConfig.apiKey}`;
+          response = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ role: 'user', parts: [{ text: 'Translate ["Hello world"] to Spanish as JSON array' }] }],
+              generationConfig: { responseMimeType: 'application/json' },
+            }),
+          });
+          if (!response.ok) throw new Error('Error al conectar con Google Gemini API.');
+        } else if (localConfig.provider === 'deepl') {
           const isFree = localConfig.apiKey?.endsWith(':fx');
           const endpoint = isFree
             ? 'https://api-free.deepl.com/v2/translate'
@@ -125,7 +138,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
     onClose();
   };
 
-  const currentProviderInfo = PROVIDER_INFO[localConfig.provider];
+  const currentProviderInfo: any = PROVIDER_INFO[localConfig.provider];
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -143,9 +156,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         <div className="modal-body">
           {/* Provider Selection Grid */}
           <div className="form-group">
-            <label className="form-label">Proveedor de Traducción:</label>
+            <label className="form-label">Elegí tu Proveedor de Traducción:</label>
             <div className="provider-grid">
-              {(['deepl', 'openai', 'claude', 'libretranslate', 'mock'] as TranslationProvider[]).map((prov) => (
+              {(['gemini', 'groq', 'deepl', 'openai', 'claude', 'libretranslate', 'mock'] as TranslationProvider[]).map((prov) => (
                 <button
                   key={prov}
                   type="button"
@@ -153,14 +166,22 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   onClick={() => handleProviderSelect(prov)}
                 >
                   <strong className="provider-card-title">
-                    {prov === 'deepl' && 'DeepL (Default)'}
+                    {prov === 'gemini' && '✨ Google Gemini'}
+                    {prov === 'groq' && '⚡ Groq (Llama 3.3)'}
+                    {prov === 'deepl' && 'DeepL API'}
                     {prov === 'openai' && 'OpenAI (GPT)'}
                     {prov === 'claude' && 'Anthropic (Claude)'}
                     {prov === 'libretranslate' && 'LibreTranslate'}
                     {prov === 'mock' && 'Modo Demo (Mock)'}
                   </strong>
                   <span className="provider-card-desc">
-                    {PROVIDER_INFO[prov].freeTier}
+                    {prov === 'gemini' && '100% Gratis sin tarjeta'}
+                    {prov === 'groq' && '100% Gratis ultra-rápido'}
+                    {prov === 'deepl' && '500k chars/mes'}
+                    {prov === 'openai' && 'Pago por token'}
+                    {prov === 'claude' && 'Pago por token'}
+                    {prov === 'libretranslate' && 'Open Source'}
+                    {prov === 'mock' && 'Offline Ilimitado'}
                   </span>
                 </button>
               ))}
@@ -176,23 +197,25 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           {/* API Key Input */}
           {localConfig.provider !== 'mock' && (
             <div className="form-group">
-              <label className="form-label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span>API Key de {PROVIDER_INFO[localConfig.provider].name}:</span>
-                {localConfig.provider === 'deepl' && (
+              <label className="form-label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 6 }}>
+                <span>API Key de {currentProviderInfo.name}:</span>
+                {currentProviderInfo.keyUrl && (
                   <a
-                    href="https://www.deepl.com/pro-api"
+                    href={currentProviderInfo.keyUrl}
                     target="_blank"
                     rel="noreferrer"
                     style={{ 
                       color: 'var(--accent-primary-light)', 
-                      fontSize: '0.78rem', 
+                      fontSize: '0.8rem', 
                       display: 'flex', 
                       alignItems: 'center', 
                       gap: 4,
+                      fontWeight: 600,
                       textDecoration: 'underline'
                     }}
                   >
-                    Obtener DeepL Key gratis <ExternalLink size={12} />
+                    <Sparkles size={13} />
+                    {currentProviderInfo.keyLinkText} <ExternalLink size={12} />
                   </a>
                 )}
               </label>
@@ -202,7 +225,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   className="form-input"
                   style={{ width: '100%', paddingLeft: 36 }}
                   placeholder={
-                    localConfig.provider === 'deepl'
+                    localConfig.provider === 'gemini'
+                      ? 'AIzaSy...'
+                      : localConfig.provider === 'groq'
+                      ? 'gsk_...'
+                      : localConfig.provider === 'deepl'
                       ? 'ej: 12345678-abcd-...:fx'
                       : localConfig.provider === 'openai'
                       ? 'sk-proj-...'
@@ -223,8 +250,26 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 />
               </div>
               <p className="form-hint">
-                Tu API Key se almacena de forma segura en tu navegador (localStorage) o en variables de entorno Vercel.
+                {localConfig.provider === 'gemini' 
+                  ? '💡 Entrá a Google AI Studio con tu cuenta de Gmail, tocá "Get API key" y pegala acá en 10 segundos.'
+                  : 'Tu API Key se almacena de forma segura en tu navegador (localStorage) o en variables de entorno Vercel.'}
               </p>
+            </div>
+          )}
+
+          {/* Model selection for Gemini */}
+          {localConfig.provider === 'gemini' && (
+            <div className="form-group">
+              <label className="form-label">Modelo de Gemini:</label>
+              <select
+                className="form-input"
+                value={localConfig.model || 'gemini-2.0-flash'}
+                onChange={(e) => setLocalConfig({ ...localConfig, model: e.target.value })}
+              >
+                <option value="gemini-2.0-flash">gemini-2.0-flash (Recomendado: Máxima velocidad y fluidez)</option>
+                <option value="gemini-1.5-flash">gemini-1.5-flash (Excelente para textos largos)</option>
+                <option value="gemini-1.5-pro">gemini-1.5-pro (Máxima calidad analítica)</option>
+              </select>
             </div>
           )}
 
@@ -235,23 +280,28 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               <input
                 type="text"
                 className="form-input"
-                placeholder="https://libretranslate.com/translate o tu host"
+                placeholder="https://translate.argosopentech.com/translate o tu host local"
                 value={localConfig.customApiUrl || ''}
                 onChange={(e) => setLocalConfig({ ...localConfig, customApiUrl: e.target.value })}
               />
             </div>
           )}
 
-          {/* Model selection for OpenAI / Claude */}
-          {(localConfig.provider === 'openai' || localConfig.provider === 'claude') && (
+          {/* Model selection for OpenAI / Claude / Groq */}
+          {(localConfig.provider === 'openai' || localConfig.provider === 'claude' || localConfig.provider === 'groq') && (
             <div className="form-group">
               <label className="form-label">Modelo a utilizar:</label>
               <select
                 className="form-input"
-                value={localConfig.model || (localConfig.provider === 'openai' ? 'gpt-4o-mini' : 'claude-3-5-haiku-20241022')}
+                value={localConfig.model || (localConfig.provider === 'openai' ? 'gpt-4o-mini' : localConfig.provider === 'groq' ? 'llama-3.3-70b-versatile' : 'claude-3-5-haiku-20241022')}
                 onChange={(e) => setLocalConfig({ ...localConfig, model: e.target.value })}
               >
-                {localConfig.provider === 'openai' ? (
+                {localConfig.provider === 'groq' ? (
+                  <>
+                    <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile (Recomendado: Gran calidad)</option>
+                    <option value="llama-3.1-8b-instant">llama-3.1-8b-instant (Ultra rápido)</option>
+                  </>
+                ) : localConfig.provider === 'openai' ? (
                   <>
                     <option value="gpt-4o-mini">gpt-4o-mini (Recomendado: Rápido y económico)</option>
                     <option value="gpt-4o">gpt-4o (Máxima capacidad de razonamiento)</option>

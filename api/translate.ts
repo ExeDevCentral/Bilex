@@ -24,7 +24,7 @@ export default async function handler(req: any, res: any) {
       texts,
       sourceLang = 'EN',
       targetLang = 'ES',
-      provider = 'deepl',
+      provider = 'gemini',
       apiKey,
       model,
       customApiUrl,
@@ -34,7 +34,98 @@ export default async function handler(req: any, res: any) {
       return res.status(400).json({ error: 'Falta el parámetro "texts" (debe ser un array no vacío de strings).' });
     }
 
-    // 1. DeepL Translation
+    // 1. Google Gemini API (Free tier in Google AI Studio, no credit card required)
+    if (provider === 'gemini') {
+      const geminiKey = apiKey || process.env.GEMINI_API_KEY;
+      if (!geminiKey) {
+        return res.status(401).json({
+          error: 'No se encontró la API Key de Google Gemini. Obtenela gratis sin tarjeta en Google AI Studio (aistudio.google.com).',
+        });
+      }
+
+      const selectedModel = model || 'gemini-2.0-flash';
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${geminiKey}`;
+
+      const prompt = `Translate the following JSON array of paragraphs from ${sourceLang} to ${targetLang}.
+Preserve paragraph count, formatting, tone, style and nuances. Output ONLY a valid JSON array of translated strings with the exact same length as the input array:
+${JSON.stringify(texts)}`;
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [
+            {
+              role: 'user',
+              parts: [{ text: prompt }],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.2,
+            responseMimeType: 'application/json',
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        return res.status(response.status).json({ error: `Error de Google Gemini API (${response.status})`, details: errText });
+      }
+
+      const data = await response.json();
+      const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
+      const parsed = JSON.parse(rawText);
+      const translations = Array.isArray(parsed) ? parsed : (parsed.translations || Object.values(parsed));
+      return res.status(200).json({ translations, provider: 'gemini' });
+    }
+
+    // 2. Groq API (Free tier, ultra-fast Llama 3.3)
+    if (provider === 'groq') {
+      const groqKey = apiKey || process.env.GROQ_API_KEY;
+      if (!groqKey) {
+        return res.status(401).json({
+          error: 'No se encontró la API Key de Groq. Obtenela gratis en console.groq.com.',
+        });
+      }
+
+      const selectedModel = model || 'llama-3.3-70b-versatile';
+      const prompt = `Translate the following JSON array of paragraphs from ${sourceLang} to ${targetLang}.
+Preserve exact paragraph count, formatting, tone, and line breaks. Return ONLY a valid JSON array of translated strings with the exact same length:
+${JSON.stringify(texts)}`;
+
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${groqKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: selectedModel,
+          messages: [
+            {
+              role: 'system',
+              content: 'You are an expert multilingual document translator. You output only valid JSON arrays of strings matching the input length.',
+            },
+            { role: 'user', content: prompt },
+          ],
+          temperature: 0.2,
+          response_format: { type: 'json_object' },
+        }),
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        return res.status(response.status).json({ error: `Error de Groq API (${response.status})`, details: errText });
+      }
+
+      const data = await response.json();
+      const rawContent = data.choices?.[0]?.message?.content || '{}';
+      const parsed = JSON.parse(rawContent);
+      const translations = Array.isArray(parsed) ? parsed : (parsed.translations || Object.values(parsed));
+      return res.status(200).json({ translations, provider: 'groq' });
+    }
+
+    // 3. DeepL Translation
     if (provider === 'deepl') {
       const deeplKey = apiKey || process.env.DEEPL_API_KEY;
       if (!deeplKey) {
@@ -43,13 +134,11 @@ export default async function handler(req: any, res: any) {
         });
       }
 
-      // Free tier keys end with ":fx"
       const isFreeTier = deeplKey.endsWith(':fx');
       const deeplEndpoint = isFreeTier
         ? 'https://api-free.deepl.com/v2/translate'
         : 'https://api.deepl.com/v2/translate';
 
-      // DeepL accepts target_lang (e.g., 'ES', 'EN-US')
       const formattedTargetLang = targetLang.toUpperCase() === 'EN' ? 'EN-US' : targetLang.toUpperCase();
       
       const payload: any = {
@@ -86,7 +175,7 @@ export default async function handler(req: any, res: any) {
       return res.status(200).json({ translations, provider: 'deepl' });
     }
 
-    // 2. OpenAI Translation (GPT-4o-mini / GPT-4o)
+    // 4. OpenAI Translation (GPT-4o-mini / GPT-4o)
     if (provider === 'openai') {
       const openAiKey = apiKey || process.env.OPENAI_API_KEY;
       if (!openAiKey) {
@@ -115,7 +204,7 @@ ${JSON.stringify(texts)}`;
             },
             { role: 'user', content: prompt },
           ],
-          temperature: 0.3,
+          temperature: 0.2,
           response_format: { type: 'json_object' },
         }),
       });
@@ -132,7 +221,7 @@ ${JSON.stringify(texts)}`;
       return res.status(200).json({ translations, provider: 'openai' });
     }
 
-    // 3. Anthropic Claude Translation
+    // 5. Anthropic Claude Translation
     if (provider === 'claude') {
       const claudeKey = apiKey || process.env.ANTHROPIC_API_KEY;
       if (!claudeKey) {
@@ -174,9 +263,9 @@ ${JSON.stringify(texts)}`;
       return res.status(200).json({ translations, provider: 'claude' });
     }
 
-    // 4. LibreTranslate
+    // 6. LibreTranslate
     if (provider === 'libretranslate') {
-      const endpoint = customApiUrl || process.env.LIBRETRANSLATE_URL || 'https://libretranslate.com/translate';
+      const endpoint = customApiUrl || process.env.LIBRETRANSLATE_URL || 'https://translate.argosopentech.com/translate';
       const translations: string[] = [];
 
       for (const text of texts) {
@@ -204,7 +293,7 @@ ${JSON.stringify(texts)}`;
       return res.status(200).json({ translations, provider: 'libretranslate' });
     }
 
-    // 5. Mock / Demo Mode
+    // 7. Mock / Demo Mode
     if (provider === 'mock') {
       const mockTranslations = texts.map((t: string) => {
         return `[Traducción al ${targetLang}]: ${t}`;

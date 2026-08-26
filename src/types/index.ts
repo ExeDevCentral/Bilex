@@ -59,7 +59,7 @@ export interface ProcessingState {
   detectedLang?: DetectedLanguageInfo;
 }
 
-export type TranslationProvider = 'deepl' | 'openai' | 'claude' | 'libretranslate' | 'mock';
+export type TranslationProvider = 'gemini' | 'groq' | 'deepl' | 'openai' | 'claude' | 'libretranslate' | 'mock';
 
 export interface TranslationConfig {
   provider: TranslationProvider;
@@ -67,7 +67,7 @@ export interface TranslationConfig {
   targetLang: string;
   apiKey?: string;
   customApiUrl?: string; // e.g. for LibreTranslate self-hosted
-  model?: string; // e.g. gpt-4o-mini or claude-3-5-haiku
+  model?: string; // e.g. gemini-2.0-flash, gpt-4o-mini, llama-3.3-70b-versatile
   formality?: 'default' | 'more' | 'less';
   useServerless: boolean;
 }

@@ -5,6 +5,101 @@ export interface TranslationProgressCallback {
 }
 
 /**
+ * Translates texts using Google Gemini API (Free tier, no credit card)
+ */
+async function translateWithGeminiClient(
+  texts: string[],
+  config: TranslationConfig
+): Promise<string[]> {
+  const apiKey = config.apiKey?.trim();
+  if (!apiKey) {
+    throw new Error('Ingresa tu API Key de Google Gemini en la Configuración. Obtenela 100% gratis en aistudio.google.com.');
+  }
+
+  const model = config.model || 'gemini-2.0-flash';
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+  const prompt = `Translate the following JSON array of paragraphs from ${config.sourceLang} to ${config.targetLang}.
+Preserve paragraph count, formatting, tone, style and nuances. Output ONLY a valid JSON array of translated strings with the exact same length as input:
+${JSON.stringify(texts)}`;
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [
+        {
+          role: 'user',
+          parts: [{ text: prompt }],
+        },
+      ],
+      generationConfig: {
+        temperature: 0.2,
+        responseMimeType: 'application/json',
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Error de Google Gemini API (${response.status}): ${errText}`);
+  }
+
+  const data = await response.json();
+  const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
+  const parsed = JSON.parse(rawText);
+  return Array.isArray(parsed) ? parsed : (parsed.translations || Object.values(parsed));
+}
+
+/**
+ * Translates texts using Groq API (Free tier, Llama 3.3)
+ */
+async function translateWithGroqClient(
+  texts: string[],
+  config: TranslationConfig
+): Promise<string[]> {
+  const apiKey = config.apiKey?.trim();
+  if (!apiKey) {
+    throw new Error('Ingresa tu API Key de Groq en la Configuración. Obtenela gratis en console.groq.com.');
+  }
+
+  const model = config.model || 'llama-3.3-70b-versatile';
+  const prompt = `Translate the following JSON array of paragraphs from ${config.sourceLang} to ${config.targetLang}.
+Preserve exact paragraph count, formatting, tone, and line breaks. Return ONLY a valid JSON array of translated strings with the exact same length:
+${JSON.stringify(texts)}`;
+
+  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model,
+      messages: [
+        {
+          role: 'system',
+          content: 'You are an expert multilingual document translator. You output only valid JSON arrays of strings matching the input length.',
+        },
+        { role: 'user', content: prompt },
+      ],
+      temperature: 0.2,
+      response_format: { type: 'json_object' },
+    }),
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Error de Groq API (${response.status}): ${errText}`);
+  }
+
+  const data = await response.json();
+  const rawContent = data.choices?.[0]?.message?.content || '{}';
+  const parsed = JSON.parse(rawContent);
+  return Array.isArray(parsed) ? parsed : (parsed.translations || Object.values(parsed));
+}
+
+/**
  * Translates an array of texts using DeepL API directly from the client
  */
 async function translateWithDeepLClient(
@@ -84,7 +179,7 @@ ${JSON.stringify(texts)}`;
         },
         { role: 'user', content: prompt },
       ],
-      temperature: 0.3,
+      temperature: 0.2,
       response_format: { type: 'json_object' },
     }),
   });
@@ -97,8 +192,7 @@ ${JSON.stringify(texts)}`;
   const data = await response.json();
   const raw = data.choices[0]?.message?.content || '{}';
   const parsed = JSON.parse(raw);
-  const translations = Array.isArray(parsed) ? parsed : (parsed.translations || Object.values(parsed));
-  return translations;
+  return Array.isArray(parsed) ? parsed : (parsed.translations || Object.values(parsed));
 }
 
 /**
@@ -150,7 +244,7 @@ async function translateWithLibreTranslate(
   texts: string[],
   config: TranslationConfig
 ): Promise<string[]> {
-  const endpoint = config.customApiUrl || 'https://libretranslate.com/translate';
+  const endpoint = config.customApiUrl || 'https://translate.argosopentech.com/translate';
   const translations: string[] = [];
 
   for (const text of texts) {
@@ -259,7 +353,6 @@ async function translateBatch(
         return data.translations;
       }
 
-      // If serverless is 404 (local vite server without Vercel backend), fallback gracefully to direct client
       if (response.status === 404) {
         console.warn('Endpoint /api/translate no disponible en entorno local, usando llamada directa del cliente.');
       } else {
@@ -277,6 +370,10 @@ async function translateBatch(
 
   // 2. Direct client call based on provider
   switch (config.provider) {
+    case 'gemini':
+      return translateWithGeminiClient(texts, config);
+    case 'groq':
+      return translateWithGroqClient(texts, config);
     case 'deepl':
       return translateWithDeepLClient(texts, config);
     case 'openai':
@@ -302,8 +399,7 @@ export async function translateDocumentParagraphs(
 
   const updatedPairs: ParagraphPair[] = pairs.map((p) => ({ ...p, status: 'pending' }));
   
-  // Group into chunks by character count (approx 1500 chars) and count (max 8 per batch)
-  const chunks: number[][] = []; // stores indices of paragraphs
+  const chunks: number[][] = [];
   let currentChunk: number[] = [];
   let currentChars = 0;
 
@@ -328,7 +424,6 @@ export async function translateDocumentParagraphs(
     const indices = chunks[chunkIdx];
     const textsToTranslate = indices.map((idx) => updatedPairs[idx].original);
 
-    // Mark current chunk as translating
     for (const idx of indices) {
       updatedPairs[idx].status = 'translating';
     }
