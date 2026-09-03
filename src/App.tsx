@@ -334,7 +334,7 @@ export const App: React.FC = () => {
       />
 
       {/* Main Content Area */}
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 2 }}>
         {/* State 1: Dropzone Upload */}
         {!metadata && processingState.stage === 'idle' && (
           <DropzoneUpload

@@ -18,6 +18,26 @@ html, body {
   transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
+/* Tech-Grid subtle academic backdrop on the page body */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(var(--bg-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bg-grid-line) 1px, transparent 1px),
+    radial-gradient(var(--bg-dot) 1px, transparent 1px);
+  background-size:
+    56px 56px,
+    56px 56px,
+    14px 14px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, #000 30%, transparent 90%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, #000 30%, transparent 90%);
+  transition: background 0.4s ease;
+}
+
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 8px;
@@ -40,10 +60,45 @@ html, body {
   flex-direction: column;
   min-height: 100vh;
   position: relative;
-  background: 
-    radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
+  background:
+    radial-gradient(ellipse 55% 45% at 12% -5%, var(--bg-glow-a) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 40% at 88% 8%, var(--bg-glow-b) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 85% 100%, var(--bg-glow-c) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 35% at 5% 90%, var(--bg-glow-b) 0%, transparent 55%),
     var(--bg-primary);
+}
+
+/* Decorative academic ornaments: faint double-rule frame + citation notches */
+.app-container::before {
+  content: '§';
+  position: fixed;
+  top: 74px;
+  right: 26px;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--bg-ornament);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.app-container::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 28px,
+      var(--bg-paper-rule) 28px,
+      var(--bg-paper-rule) 29px
+    );
+  opacity: 0.35;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
 }
 
 /* Typography Helpers */

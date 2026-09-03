@@ -24,6 +24,16 @@
   --accent-secondary: #8b5cf6;
   --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
   --accent-gradient-subtle: linear-gradient(135deg, rgba(99, 102, 241, 0.22) 0%, rgba(168, 85, 247, 0.22) 100%);
+
+  /* Academic Background - Grid / Pauta / Paper */
+  --bg-grid-line: rgba(99, 102, 241, 0.055);
+  --bg-grid-strong: rgba(99, 102, 241, 0.09);
+  --bg-paper-rule: rgba(255, 255, 255, 0.045);
+  --bg-dot: rgba(139, 92, 246, 0.08);
+  --bg-ornament: rgba(139, 92, 246, 0.10);
+  --bg-glow-a: rgba(99, 102, 241, 0.10);
+  --bg-glow-b: rgba(168, 85, 247, 0.08);
+  --bg-glow-c: rgba(236, 72, 153, 0.05);
   
   --success: #34d399;
   --success-bg: rgba(16, 185, 129, 0.2);
@@ -89,4 +99,14 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.18);
+
+  /* Academic Background - Light */
+  --bg-grid-line: rgba(99, 102, 241, 0.10);
+  --bg-grid-strong: rgba(99, 102, 241, 0.14);
+  --bg-paper-rule: rgba(15, 23, 42, 0.05);
+  --bg-dot: rgba(139, 92, 246, 0.12);
+  --bg-ornament: rgba(139, 92, 246, 0.12);
+  --bg-glow-a: rgba(99, 102, 241, 0.08);
+  --bg-glow-b: rgba(168, 85, 247, 0.06);
+  --bg-glow-c: rgba(236, 72, 153, 0.04);
 }

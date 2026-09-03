@@ -175,34 +175,36 @@ export const DropzoneUpload: React.FC<DropzoneUploadProps> = ({
           style={{ display: 'none' }}
         />
 
-        <div className="dropzone-icon-wrap">
-          <UploadCloud size={38} />
-        </div>
+        <div className="dropzone-content">
+          <div className="dropzone-icon-wrap">
+            <UploadCloud size={38} />
+          </div>
 
-        <h2 className="dropzone-title">
-          Arrastrá tu <span className="gradient-text">PDF o una/varias fotos</span> aquí
-        </h2>
-        <p className="dropzone-desc">
-          Si subís varias fotos, las compilamos automáticamente en un único PDF ordenado con OCR.
-        </p>
+          <h2 className="dropzone-title">
+            Arrastrá tu <span className="gradient-text">PDF o una/varias fotos</span> aquí
+          </h2>
+          <p className="dropzone-desc">
+            Si subís varias fotos, las compilamos automáticamente en un único PDF ordenado con OCR.
+          </p>
 
-        <div className="dropzone-pills">
-          <span className="dropzone-pill">
-            <FileText size={12} style={{ display: 'inline', marginRight: 4 }} />
-            PDF (Digital y Escaneado)
-          </span>
-          <span className="dropzone-pill">
-            <ImageIcon size={12} style={{ display: 'inline', marginRight: 4 }} />
-            Múltiples Fotos (JPG / PNG / WebP)
-          </span>
-          <span className="dropzone-pill">
-            <Layers size={12} style={{ display: 'inline', marginRight: 4 }} />
-            Reordenador de páginas
-          </span>
-          <span className="dropzone-pill">
-            <Sparkles size={12} style={{ display: 'inline', marginRight: 4 }} />
-            OCR WebAssembly en el Browser
-          </span>
+          <div className="dropzone-pills">
+            <span className="dropzone-pill">
+              <FileText size={12} style={{ display: 'inline', marginRight: 4 }} />
+              PDF (Digital y Escaneado)
+            </span>
+            <span className="dropzone-pill">
+              <ImageIcon size={12} style={{ display: 'inline', marginRight: 4 }} />
+              Múltiples Fotos (JPG / PNG / WebP)
+            </span>
+            <span className="dropzone-pill">
+              <Layers size={12} style={{ display: 'inline', marginRight: 4 }} />
+              Reordenador de páginas
+            </span>
+            <span className="dropzone-pill">
+              <Sparkles size={12} style={{ display: 'inline', marginRight: 4 }} />
+              OCR WebAssembly en el Browser
+            </span>
+          </div>
         </div>
       </div>
 

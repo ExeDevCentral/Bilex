@@ -235,7 +235,7 @@ export const DualReader: React.FC<DualReaderProps> = ({
                 onClick={() => handleSelectPair(pair.id)}
               >
                 {/* LEFT: Original Paragraph Card */}
-                <div className="paragraph-card">
+                <div className="paragraph-card paragraph-card--source">
                   <div className="paragraph-card-header">
                     <span className="paragraph-number-badge">#{index + 1}</span>
                     <div className="card-actions-hover">
@@ -263,7 +263,7 @@ export const DualReader: React.FC<DualReaderProps> = ({
                 </div>
 
                 {/* RIGHT: Translated Paragraph Card */}
-                <div className="paragraph-card">
+                <div className="paragraph-card paragraph-card--target">
                   <div className="paragraph-card-header">
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                       <span className="paragraph-number-badge">#{index + 1}</span>

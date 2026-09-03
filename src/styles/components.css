@@ -171,23 +171,81 @@
 }
 
 .dropzone {
-  border: 2px dashed var(--border-subtle);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius-xl);
   padding: 50px 30px;
   text-align: center;
-  background: var(--bg-surface-glass);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)),
+    var(--border-glass);
+  background-clip: padding-box;
   backdrop-filter: blur(12px);
   cursor: pointer;
   transition: all var(--transition-normal);
   position: relative;
   overflow: hidden;
+  box-shadow:
+    inset 0 0 0 1px var(--bg-grid-strong),
+    inset 4px 0 0 -1px var(--bg-grid-line),
+    inset -4px 0 0 -1px var(--bg-grid-line),
+    var(--shadow-md);
+}
+
+/* Academic ruled-paper lines inside the dropzone (hoja de pauta) */
+.dropzone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 31px,
+      var(--bg-paper-rule) 31px,
+      var(--bg-paper-rule) 32px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 31px,
+      var(--bg-grid-line) 31px,
+      var(--bg-grid-line) 32px
+    );
+  opacity: 0.5;
+  mask-image: radial-gradient(ellipse 90% 95% at 50% 40%, #000 40%, transparent 95%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 95% at 50% 40%, #000 40%, transparent 95%);
+}
+
+/* Vertical margin rules (margen de cuaderno) */
+.dropzone::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 26px;
+  bottom: 0;
+  width: 1px;
+  pointer-events: none;
+  background: var(--bg-grid-strong);
+  opacity: 0.6;
 }
 
 .dropzone:hover, .dropzone.is-dragover {
   border-color: var(--accent-primary-light);
-  background: rgba(99, 102, 241, 0.08);
   transform: scale(1.005);
-  box-shadow: var(--shadow-glow);
+  box-shadow:
+    inset 0 0 0 1px var(--bg-grid-strong),
+    inset 4px 0 0 -1px var(--bg-grid-line),
+    inset -4px 0 0 -1px var(--bg-grid-line),
+    var(--shadow-glow);
+}
+
+.dropzone:hover::after, .dropzone.is-dragover::after {
+  left: 34px;
+  width: 2px;
+  background: var(--accent-primary-light);
+  opacity: 0.7;
+  transition: left var(--transition-normal), width var(--transition-normal);
 }
 
 .dropzone-icon-wrap {
@@ -201,6 +259,11 @@
   align-items: center;
   justify-content: center;
   color: var(--accent-primary-light);
+}
+
+.dropzone-content {
+  position: relative;
+  z-index: 1;
 }
 
 .dropzone-title {
@@ -521,7 +584,63 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 80px;
+  overflow: hidden;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+/* Academic ruled-paper texture inside each paragraph card */
+.paragraph-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 23px,
+    var(--bg-paper-rule) 23px,
+    var(--bg-paper-rule) 24px
+  );
+  opacity: 0.4;
+}
+
+.paragraph-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Source card: subtle slate left accent */
+.paragraph-card--source {
+  border-left: 3px solid var(--text-dim);
+}
+
+/* Target card: gradient accent left edge */
+.paragraph-card--target {
+  border-left: 3px solid var(--accent-primary);
+}
+
+.paragraph-card--source::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 14px;
+  bottom: 0;
+  width: 1px;
+  pointer-events: none;
+  background: var(--bg-grid-strong);
+  opacity: 0.5;
+}
+
+.paragraph-card--target::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 14px;
+  bottom: 0;
+  width: 1px;
+  pointer-events: none;
+  background: var(--bg-grid-strong);
+  opacity: 0.5;
 }
 
 .is-active-pair .paragraph-card {
