@@ -376,3 +376,5 @@ export const DualReader: React.FC<DualReaderProps> = ({
     </div>
   );
 };
+
+export default DualReader;

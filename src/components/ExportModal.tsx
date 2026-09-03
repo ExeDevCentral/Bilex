@@ -249,3 +249,5 @@ export const ExportModal: React.FC<ExportModalProps> = ({
     </div>
   );
 };
+
+export default ExportModal;

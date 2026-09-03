@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Header } from './components/Header';
 import { DropzoneUpload } from './components/DropzoneUpload';
 import { ProcessingProgress } from './components/ProcessingProgress';
-import { DualReader } from './components/DualReader';
-import { SettingsModal } from './components/SettingsModal';
-import { ExportModal } from './components/ExportModal';
 import type { 
   ParagraphPair, 
   DocumentMetadata, 
@@ -15,6 +12,10 @@ import { extractTextFromPDF, extractTextFromImage } from './services/pdfExtracto
 import { translateDocumentParagraphs } from './services/translationService';
 import { detectLanguageFromText } from './services/languageDetector';
 import { getSampleDocument } from './utils/sampleDocument';
+
+const DualReader = lazy(() => import('./components/DualReader'));
+const SettingsModal = lazy(() => import('./components/SettingsModal'));
+const ExportModal = lazy(() => import('./components/ExportModal'));
 
 const STORAGE_CONFIG_KEY = 'dualdoc_translation_config';
 const STORAGE_THEME_KEY = 'dualdoc_theme';
@@ -354,14 +355,27 @@ export const App: React.FC = () => {
 
         {/* State 3: Dual Reader Workspace */}
         {showDualReader && (
-          <DualReader
-            pairs={pairs}
-            metadata={metadata}
-            sourceLang={config.sourceLang}
-            targetLang={config.targetLang}
-            onUpdateParagraph={handleUpdateParagraph}
-            onRetranslateParagraph={handleRetranslateParagraph}
-          />
+          <Suspense
+            fallback={
+              <ProcessingProgress
+                state={{
+                  stage: 'translating',
+                  progress: 95,
+                  statusMessage: 'Cargando lector bilingüe...',
+                }}
+                onCancel={handleNewDocument}
+              />
+            }
+          >
+            <DualReader
+              pairs={pairs}
+              metadata={metadata}
+              sourceLang={config.sourceLang}
+              targetLang={config.targetLang}
+              onUpdateParagraph={handleUpdateParagraph}
+              onRetranslateParagraph={handleRetranslateParagraph}
+            />
+          </Suspense>
         )}
 
         {/* Error State if no document */}
@@ -381,21 +395,25 @@ export const App: React.FC = () => {
       </main>
 
       {/* Settings Modal */}
-      <SettingsModal
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        config={config}
-        onSaveConfig={handleSaveConfig}
-      />
+      <Suspense fallback={null}>
+        <SettingsModal
+          isOpen={isSettingsOpen}
+          onClose={() => setIsSettingsOpen(false)}
+          config={config}
+          onSaveConfig={handleSaveConfig}
+        />
+      </Suspense>
 
       {/* Export Modal */}
       {metadata && (
-        <ExportModal
-          isOpen={isExportOpen}
-          onClose={() => setIsExportOpen(false)}
-          pairs={pairs}
-          metadata={metadata}
-        />
+        <Suspense fallback={null}>
+          <ExportModal
+            isOpen={isExportOpen}
+            onClose={() => setIsExportOpen(false)}
+            pairs={pairs}
+            metadata={metadata}
+          />
+        </Suspense>
       )}
     </div>
   );

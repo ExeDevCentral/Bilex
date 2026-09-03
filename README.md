@@ -2,8 +2,8 @@
 
 [![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel)](https://dualdoc-translate.vercel.app)
 [![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-6.x-646cff?style=for-the-badge&logo=vite)](https://vite.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.x-3178c6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-8.x-646cff?style=for-the-badge&logo=vite)](https://vite.dev/)
 [![Tesseract.js](https://img.shields.io/badge/OCR-Tesseract_WASM-blueviolet?style=for-the-badge)](https://tesseract.projectnaptha.com/)
 
 **Bilex** es una aplicación web personal diseñada para traducir documentos completos (PDFs e imágenes) con una **vista dual tipo lectura bilingüe** (original a la izquierda, traducción a la derecha, alineados párrafo a párrafo con scroll sincronizado).
