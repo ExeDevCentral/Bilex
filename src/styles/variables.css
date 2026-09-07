@@ -24,6 +24,7 @@
   --accent-secondary: #8b5cf6;
   --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
   --accent-gradient-subtle: linear-gradient(135deg, rgba(99, 102, 241, 0.22) 0%, rgba(168, 85, 247, 0.22) 100%);
+  --accent-glow: rgba(99, 102, 241, 0.2);
 
   /* Academic Background - Grid / Pauta / Paper */
   --bg-grid-line: rgba(99, 102, 241, 0.055);
