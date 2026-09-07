@@ -17,8 +17,8 @@ const DualReader = lazy(() => import('./components/DualReader'));
 const SettingsModal = lazy(() => import('./components/SettingsModal'));
 const ExportModal = lazy(() => import('./components/ExportModal'));
 
-const STORAGE_CONFIG_KEY = 'dualdoc_translation_config';
-const STORAGE_THEME_KEY = 'dualdoc_theme';
+const STORAGE_CONFIG_KEY = 'bilex_translation_config';
+const STORAGE_THEME_KEY = 'bilex_theme';
 
 const DEFAULT_CONFIG: TranslationConfig = {
   provider: 'gemini',
@@ -248,7 +248,7 @@ export const App: React.FC = () => {
       const data = JSON.parse(text);
 
       if (!data.pairs || !data.metadata) {
-        throw new Error('El archivo JSON no tiene el formato válido de DualDoc.');
+        throw new Error('El archivo JSON no tiene el formato válido de Bilex.');
       }
 
       setPairs(data.pairs);
