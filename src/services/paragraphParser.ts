@@ -39,7 +39,7 @@ export function parseRawTextToParagraphs(
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
-      const isListItem = /^(\d+[\.\)]|[-*•–—]|[a-zA-Z][\.\)])\s+/.test(line);
+      const isListItem = /^(\d+[.)]|[-*•–—]|[a-zA-Z][.)])\s+/.test(line);
       const isHeading = line.length < 70 && !/[.,;:?!]$/.test(line) && i < lines.length - 1 && lines[i + 1].length > 60;
 
       if (isListItem || isHeading) {
