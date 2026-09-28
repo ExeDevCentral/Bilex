@@ -9,16 +9,16 @@ html, body {
   min-height: 100vh;
   background-color: var(--bg-primary);
   color: var(--text-main);
-  font-family: var(--font-sans);
-  font-size: 15px;
-  line-height: 1.6;
+  font-family: var(--font-reading), var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
-/* Tech-Grid subtle academic backdrop on the page body */
+/* Shakespearean Renaissance folio parchment backdrop */
 body::before {
   content: '';
   position: fixed;
@@ -30,28 +30,29 @@ body::before {
     linear-gradient(90deg, var(--bg-grid-line) 1px, transparent 1px),
     radial-gradient(var(--bg-dot) 1px, transparent 1px);
   background-size:
-    56px 56px,
-    56px 56px,
-    14px 14px;
-  mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, #000 30%, transparent 90%);
-  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, #000 30%, transparent 90%);
+    64px 64px,
+    64px 64px,
+    16px 16px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, #000 35%, transparent 92%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, #000 35%, transparent 92%);
   transition: background 0.4s ease;
 }
 
-/* Custom Scrollbars */
+/* Custom Antique Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-subtle);
+  background: var(--border-gold);
   border-radius: var(--radius-full);
+  border: 2px solid var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-dim);
+  background: var(--border-focus);
 }
 
 /* App Container */
@@ -61,23 +62,25 @@ body::before {
   min-height: 100vh;
   position: relative;
   background:
-    radial-gradient(ellipse 55% 45% at 12% -5%, var(--bg-glow-a) 0%, transparent 60%),
-    radial-gradient(ellipse 45% 40% at 88% 8%, var(--bg-glow-b) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 45% at 10% -5%, var(--bg-glow-a) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 10%, var(--bg-glow-b) 0%, transparent 60%),
     radial-gradient(ellipse 60% 50% at 85% 100%, var(--bg-glow-c) 0%, transparent 65%),
-    radial-gradient(ellipse 40% 35% at 5% 90%, var(--bg-glow-b) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 35% at 5% 90%, var(--bg-glow-a) 0%, transparent 55%),
     var(--bg-primary);
 }
 
-/* Decorative academic ornaments: faint double-rule frame + citation notches */
+/* Decorative Renaissance Folio watermark */
 .app-container::before {
-  content: '§';
+  content: '❧ BILEX ❧';
   position: fixed;
-  top: 74px;
-  right: 26px;
-  font-family: var(--font-mono);
-  font-size: 20px;
-  font-weight: 300;
-  color: var(--bg-ornament);
+  bottom: 14px;
+  right: 24px;
+  font-family: var(--font-heading);
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: var(--border-gold);
+  opacity: 0.35;
   pointer-events: none;
   z-index: 1;
 }
@@ -92,13 +95,13 @@ body::before {
     repeating-linear-gradient(
       to bottom,
       transparent 0,
-      transparent 28px,
-      var(--bg-paper-rule) 28px,
-      var(--bg-paper-rule) 29px
+      transparent 32px,
+      var(--bg-paper-rule) 32px,
+      var(--bg-paper-rule) 33px
     );
-  opacity: 0.35;
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  opacity: 0.4;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
 }
 
 /* Typography Helpers */
@@ -106,7 +109,8 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 700;
   color: var(--text-main);
-  line-height: 1.25;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
 }
 
 .gradient-text {
@@ -114,6 +118,33 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
+}
+
+/* Renaissance Ornaments & Rules */
+.filigree-border {
+  border: 1px solid var(--border-gold);
+  outline: 1px solid rgba(197, 160, 89, 0.25);
+  outline-offset: -4px;
+}
+
+.fleuron-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--border-gold);
+  margin: 1.5rem 0;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.fleuron-divider::before,
+.fleuron-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
 }
 
 /* Keyframe Animations */
@@ -130,19 +161,10 @@ h1, h2, h3, h4, h5, h6 {
 
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+    box-shadow: 0 0 14px var(--accent-glow);
   }
   50% {
-    box-shadow: 0 0 25px rgba(99, 102, 241, 0.45);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
+    box-shadow: 0 0 26px rgba(223, 184, 108, 0.45);
   }
 }
 
@@ -160,49 +182,51 @@ h1, h2, h3, h4, h5, h6 {
   animation: spin 1s linear infinite;
 }
 
-/* Glassmorphism Surface */
+/* Parchment Codex Surface */
 .glass-panel {
   background: var(--bg-surface-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
+  position: relative;
 }
 
-/* Badge Styles */
+/* Wax Seal and Ribbon Badges */
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 3px 8px;
-  border-radius: var(--radius-full);
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
 }
 
 .badge-primary {
   background: var(--accent-gradient-subtle);
-  color: var(--accent-primary);
-  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: var(--accent-gold);
+  border: 1px solid var(--border-gold);
 }
 
 .badge-success {
   background: var(--success-bg);
   color: var(--success);
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  border: 1px solid rgba(56, 161, 105, 0.35);
 }
 
 .badge-warning {
   background: var(--warning-bg);
   color: var(--warning);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  border: 1px solid rgba(214, 158, 46, 0.35);
 }
 
 .badge-info {
   background: var(--info-bg);
   color: var(--info);
-  border: 1px solid rgba(14, 165, 233, 0.3);
+  border: 1px solid rgba(49, 130, 206, 0.35);
 }

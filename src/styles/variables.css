@@ -1,71 +1,75 @@
 :root {
-  /* Color Palette - Dark Premium Theme (Default) */
-  --bg-primary: #0b0f19;
-  --bg-secondary: #111827;
-  --bg-surface: #1e293b;
-  --bg-surface-elevated: #283548;
-  --bg-surface-glass: rgba(30, 41, 59, 0.85);
-  --bg-hover: rgba(255, 255, 255, 0.08);
+  /* Shakespearean First Folio - Midnight Quarto (Dark Theme) */
+  --bg-primary: #120f0d;
+  --bg-secondary: #1a1512;
+  --bg-surface: #221c17;
+  --bg-surface-elevated: #2c241e;
+  --bg-surface-glass: rgba(34, 28, 23, 0.88);
+  --bg-hover: rgba(223, 184, 108, 0.09);
 
-  --border-subtle: #37475d;
-  --border-focus: #818cf8;
-  --border-glass: rgba(255, 255, 255, 0.15);
+  --border-subtle: #3d3227;
+  --border-focus: #dfb86c;
+  --border-glass: rgba(223, 184, 108, 0.22);
+  --border-gold: #b88a38;
+  --border-gold-bright: #dfb86c;
 
-  /* High Contrast Typography */
-  --text-main: #ffffff;
-  --text-muted: #cbd5e1; /* Slate 300 - high readability */
-  --text-dim: #94a3b8;   /* Slate 400 */
-  --text-inverse: #0f172a;
+  /* Candlelight Illuminated Typography */
+  --text-main: #f5ede2;       /* Warm ivory candlelight */
+  --text-muted: #c8b9a6;      /* Soft sepia tint */
+  --text-dim: #948574;        /* Aged parchment mute */
+  --text-inverse: #120f0d;
 
-  /* Accent Colors */
-  --accent-primary: #6366f1;
-  --accent-primary-hover: #4f46e5;
-  --accent-primary-light: #818cf8;
-  --accent-secondary: #8b5cf6;
-  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
-  --accent-gradient-subtle: linear-gradient(135deg, rgba(99, 102, 241, 0.22) 0%, rgba(168, 85, 247, 0.22) 100%);
-  --accent-glow: rgba(99, 102, 241, 0.2);
+  /* Renaissance Accents: Velvet Crimson & Burnished Gold */
+  --accent-primary: #9c2838;
+  --accent-primary-hover: #b83246;
+  --accent-primary-light: #e04a5e;
+  --accent-secondary: #dfb86c;
+  --accent-gold: #dfb86c;
+  --accent-gradient: linear-gradient(135deg, #b88a38 0%, #9c2838 50%, #dfb86c 100%);
+  --accent-gradient-subtle: linear-gradient(135deg, rgba(184, 138, 56, 0.24) 0%, rgba(156, 40, 56, 0.22) 100%);
+  --accent-glow: rgba(223, 184, 108, 0.25);
 
-  /* Academic Background - Grid / Pauta / Paper */
-  --bg-grid-line: rgba(99, 102, 241, 0.055);
-  --bg-grid-strong: rgba(99, 102, 241, 0.09);
-  --bg-paper-rule: rgba(255, 255, 255, 0.045);
-  --bg-dot: rgba(139, 92, 246, 0.08);
-  --bg-ornament: rgba(139, 92, 246, 0.10);
-  --bg-glow-a: rgba(99, 102, 241, 0.10);
-  --bg-glow-b: rgba(168, 85, 247, 0.08);
-  --bg-glow-c: rgba(236, 72, 153, 0.05);
-  
-  --success: #34d399;
-  --success-bg: rgba(16, 185, 129, 0.2);
-  --warning: #fbbf24;
-  --warning-bg: rgba(245, 158, 11, 0.2);
-  --danger: #f87171;
-  --danger-bg: rgba(239, 68, 68, 0.2);
-  --info: #38bdf8;
-  --info-bg: rgba(14, 165, 233, 0.2);
+  /* Academic Background - Folio Rules & Paper */
+  --bg-grid-line: rgba(223, 184, 108, 0.05);
+  --bg-grid-strong: rgba(223, 184, 108, 0.09);
+  --bg-paper-rule: rgba(245, 237, 226, 0.04);
+  --bg-dot: rgba(184, 138, 56, 0.09);
+  --bg-ornament: rgba(223, 184, 108, 0.12);
+  --bg-glow-a: rgba(184, 138, 56, 0.12);
+  --bg-glow-b: rgba(156, 40, 56, 0.10);
+  --bg-glow-c: rgba(223, 184, 108, 0.06);
 
-  /* Paired Row Highlight */
-  --pair-active-bg: rgba(99, 102, 241, 0.22);
-  --pair-active-border: #818cf8;
-  --pair-hover-bg: rgba(99, 102, 241, 0.1);
+  --success: #38a169;
+  --success-bg: rgba(56, 161, 105, 0.2);
+  --warning: #d69e2e;
+  --warning-bg: rgba(214, 158, 46, 0.2);
+  --danger: #e53e3e;
+  --danger-bg: rgba(229, 62, 62, 0.2);
+  --info: #3182ce;
+  --info-bg: rgba(49, 130, 206, 0.2);
+
+  /* Scriptorium Active Verse / Paragraph Highlight */
+  --pair-active-bg: rgba(223, 184, 108, 0.18);
+  --pair-active-border: #dfb86c;
+  --pair-hover-bg: rgba(223, 184, 108, 0.08);
 
   /* Typography */
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-heading: 'Outfit', var(--font-sans);
+  --font-heading: 'Cinzel', Georgia, serif;
+  --font-reading: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 20px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
-  --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.4);
+  /* Shadows with deep antique depth */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 8px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.7), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 25px rgba(223, 184, 108, 0.35);
 
-  /* Radii */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  /* Filigree Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
   --radius-full: 9999px;
 
   /* Transitions */
@@ -74,40 +78,53 @@
   --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Light Theme Variables */
+/* Shakespearean First Folio - Pergamino Real (Light Theme) */
 [data-theme="light"] {
-  --bg-primary: #f8fafc;
-  --bg-secondary: #f1f5f9;
-  --bg-surface: #ffffff;
-  --bg-surface-elevated: #ffffff;
-  --bg-surface-glass: rgba(255, 255, 255, 0.9);
-  --bg-hover: rgba(0, 0, 0, 0.05);
+  --bg-primary: #f7f2e7;
+  --bg-secondary: #eee5d3;
+  --bg-surface: #fffdf9;
+  --bg-surface-elevated: #faf6ec;
+  --bg-surface-glass: rgba(255, 253, 249, 0.92);
+  --bg-hover: rgba(184, 138, 56, 0.09);
 
-  --border-subtle: #cbd5e1;
-  --border-focus: #4f46e5;
-  --border-glass: rgba(0, 0, 0, 0.1);
+  --border-subtle: #d8c7a6;
+  --border-focus: #a8782a;
+  --border-glass: rgba(168, 120, 42, 0.18);
+  --border-gold: #c5a059;
+  --border-gold-bright: #a8782a;
 
-  --text-main: #0f172a;
-  --text-muted: #334155;
-  --text-dim: #64748b;
-  --text-inverse: #ffffff;
+  /* Iron-Gall Ink Typography */
+  --text-main: #1f1814;       /* Deep iron gall ink */
+  --text-muted: #544437;      /* Warm sepia note */
+  --text-dim: #7f6e5e;        /* Faded marginalia */
+  --text-inverse: #fffdf9;
 
-  --pair-active-bg: #eff6ff;
-  --pair-active-border: #6366f1;
-  --pair-hover-bg: #f8fafc;
+  /* Royal Crimson Wax Seal & Gold Leaf */
+  --accent-primary: #851e2d;
+  --accent-primary-hover: #6e1724;
+  --accent-primary-light: #a4283b;
+  --accent-secondary: #a8782a;
+  --accent-gold: #a8782a;
+  --accent-gradient: linear-gradient(135deg, #851e2d 0%, #b88a38 50%, #6e1724 100%);
+  --accent-gradient-subtle: linear-gradient(135deg, rgba(133, 30, 45, 0.14) 0%, rgba(184, 138, 56, 0.16) 100%);
+  --accent-glow: rgba(197, 160, 89, 0.3);
 
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.18);
+  --pair-active-bg: rgba(197, 160, 89, 0.22);
+  --pair-active-border: #a8782a;
+  --pair-hover-bg: rgba(197, 160, 89, 0.09);
 
-  /* Academic Background - Light */
-  --bg-grid-line: rgba(99, 102, 241, 0.10);
-  --bg-grid-strong: rgba(99, 102, 241, 0.14);
-  --bg-paper-rule: rgba(15, 23, 42, 0.05);
-  --bg-dot: rgba(139, 92, 246, 0.12);
-  --bg-ornament: rgba(139, 92, 246, 0.12);
-  --bg-glow-a: rgba(99, 102, 241, 0.08);
-  --bg-glow-b: rgba(168, 85, 247, 0.06);
-  --bg-glow-c: rgba(236, 72, 153, 0.04);
+  --shadow-sm: 0 1px 3px rgba(31, 24, 20, 0.1);
+  --shadow-md: 0 4px 8px -1px rgba(31, 24, 20, 0.12), 0 2px 4px -2px rgba(31, 24, 20, 0.08);
+  --shadow-lg: 0 12px 24px -4px rgba(31, 24, 20, 0.16);
+  --shadow-glow: 0 0 22px rgba(197, 160, 89, 0.28);
+
+  /* Academic Background - Parchment Rules */
+  --bg-grid-line: rgba(184, 138, 56, 0.08);
+  --bg-grid-strong: rgba(184, 138, 56, 0.14);
+  --bg-paper-rule: rgba(31, 24, 20, 0.04);
+  --bg-dot: rgba(184, 138, 56, 0.12);
+  --bg-ornament: rgba(184, 138, 56, 0.14);
+  --bg-glow-a: rgba(197, 160, 89, 0.12);
+  --bg-glow-b: rgba(133, 30, 45, 0.08);
+  --bg-glow-c: rgba(197, 160, 89, 0.06);
 }
