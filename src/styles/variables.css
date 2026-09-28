@@ -1,130 +1,111 @@
 :root {
-  /* Shakespearean First Folio - Midnight Quarto (Dark Theme) */
-  --bg-primary: #120f0d;
-  --bg-secondary: #1a1512;
-  --bg-surface: #221c17;
-  --bg-surface-elevated: #2c241e;
-  --bg-surface-glass: rgba(34, 28, 23, 0.88);
-  --bg-hover: rgba(223, 184, 108, 0.09);
+  /* Kindle / Literary Reader - Warm Charcoal (Dark Mode) */
+  --bg-primary: #181614;
+  --bg-secondary: #211e1b;
+  --bg-surface: #24201d;
+  --bg-surface-elevated: #2c2825;
+  --bg-surface-glass: rgba(33, 29, 26, 0.94);
+  --bg-hover: rgba(255, 255, 255, 0.05);
 
-  --border-subtle: #3d3227;
-  --border-focus: #dfb86c;
-  --border-glass: rgba(223, 184, 108, 0.22);
-  --border-gold: #b88a38;
-  --border-gold-bright: #dfb86c;
+  --border-subtle: #332e29;
+  --border-focus: #c86a59;
+  --border-glass: rgba(255, 255, 255, 0.07);
+  --border-gold: #3d3731;
+  --border-gold-bright: #c86a59;
 
-  /* Candlelight Illuminated Typography */
-  --text-main: #f5ede2;       /* Warm ivory candlelight */
-  --text-muted: #c8b9a6;      /* Soft sepia tint */
-  --text-dim: #948574;        /* Aged parchment mute */
-  --text-inverse: #120f0d;
+  /* Natural Candlelight Typography */
+  --text-main: #ded8ce;       /* Soft warm e-ink text */
+  --text-muted: #a39a8e;      /* Subtle commentary */
+  --text-dim: #736b61;        /* Quiet marginalia */
+  --text-inverse: #181614;
 
-  /* Renaissance Accents: Velvet Crimson & Burnished Gold */
-  --accent-primary: #9c2838;
-  --accent-primary-hover: #b83246;
-  --accent-primary-light: #e04a5e;
-  --accent-secondary: #dfb86c;
-  --accent-gold: #dfb86c;
-  --accent-gradient: linear-gradient(135deg, #b88a38 0%, #9c2838 50%, #dfb86c 100%);
-  --accent-gradient-subtle: linear-gradient(135deg, rgba(184, 138, 56, 0.24) 0%, rgba(156, 40, 56, 0.22) 100%);
-  --accent-glow: rgba(223, 184, 108, 0.25);
+  /* Organic Accents: Terracotta & Warm Ochre */
+  --accent-primary: #c86a59;
+  --accent-primary-hover: #dc7c6a;
+  --accent-primary-light: #e89586;
+  --accent-secondary: #d19e48;
+  --accent-gold: #d19e48;
+  --accent-gradient: linear-gradient(135deg, #c86a59 0%, #d19e48 100%);
+  --accent-gradient-subtle: rgba(200, 106, 89, 0.14);
+  --accent-glow: rgba(200, 106, 89, 0.18);
 
-  /* Academic Background - Folio Rules & Paper */
-  --bg-grid-line: rgba(223, 184, 108, 0.05);
-  --bg-grid-strong: rgba(223, 184, 108, 0.09);
-  --bg-paper-rule: rgba(245, 237, 226, 0.04);
-  --bg-dot: rgba(184, 138, 56, 0.09);
-  --bg-ornament: rgba(223, 184, 108, 0.12);
-  --bg-glow-a: rgba(184, 138, 56, 0.12);
-  --bg-glow-b: rgba(156, 40, 56, 0.10);
-  --bg-glow-c: rgba(223, 184, 108, 0.06);
-
-  --success: #38a169;
-  --success-bg: rgba(56, 161, 105, 0.2);
-  --warning: #d69e2e;
-  --warning-bg: rgba(214, 158, 46, 0.2);
+  --success: #48bb78;
+  --success-bg: rgba(72, 187, 120, 0.16);
+  --warning: #ed8936;
+  --warning-bg: rgba(237, 137, 54, 0.16);
   --danger: #e53e3e;
-  --danger-bg: rgba(229, 62, 62, 0.2);
-  --info: #3182ce;
-  --info-bg: rgba(49, 130, 206, 0.2);
+  --danger-bg: rgba(229, 62, 62, 0.16);
+  --info: #4299e1;
+  --info-bg: rgba(66, 153, 225, 0.16);
 
-  /* Scriptorium Active Verse / Paragraph Highlight */
-  --pair-active-bg: rgba(223, 184, 108, 0.18);
-  --pair-active-border: #dfb86c;
-  --pair-hover-bg: rgba(223, 184, 108, 0.08);
+  /* Reader Active Paragraph Highlight (Soft highlighter wash) */
+  --pair-active-bg: rgba(255, 255, 255, 0.045);
+  --pair-active-border: #c86a59;
+  --pair-hover-bg: rgba(255, 255, 255, 0.02);
 
-  /* Typography */
-  --font-heading: 'Cinzel', Georgia, serif;
-  --font-reading: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  /* Typography designed specifically for long reading */
+  --font-heading: 'Literata', Georgia, serif;
+  --font-reading: 'Literata', 'Newsreader', Georgia, serif;
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Shadows with deep antique depth */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 4px 8px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.7), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 25px rgba(223, 184, 108, 0.35);
+  /* Shadows: Organic and Soft */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 3px 6px -1px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 10px 24px -4px rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 16px rgba(200, 106, 89, 0.2);
 
-  /* Filigree Radii */
-  --radius-sm: 4px;
-  --radius-md: 8px;
+  /* Soft book corner radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
   --radius-lg: 14px;
-  --radius-xl: 20px;
+  --radius-xl: 18px;
   --radius-full: 9999px;
 
   /* Transitions */
   --transition-fast: 0.15s ease;
   --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Shakespearean First Folio - Pergamino Real (Light Theme) */
+/* Kindle / Literary Reader - Warm Paperwhite (Light Mode) */
 [data-theme="light"] {
-  --bg-primary: #f7f2e7;
-  --bg-secondary: #eee5d3;
-  --bg-surface: #fffdf9;
-  --bg-surface-elevated: #faf6ec;
-  --bg-surface-glass: rgba(255, 253, 249, 0.92);
-  --bg-hover: rgba(184, 138, 56, 0.09);
+  --bg-primary: #f7f4ed;      /* Authentic warm book paper */
+  --bg-secondary: #eeeae0;    /* Page depth */
+  --bg-surface: #faf7f0;      /* Elevated page surface */
+  --bg-surface-elevated: #f3efe6;
+  --bg-surface-glass: rgba(250, 247, 240, 0.95);
+  --bg-hover: rgba(0, 0, 0, 0.035);
 
-  --border-subtle: #d8c7a6;
-  --border-focus: #a8782a;
-  --border-glass: rgba(168, 120, 42, 0.18);
-  --border-gold: #c5a059;
-  --border-gold-bright: #a8782a;
+  --border-subtle: #e3dcd0;
+  --border-focus: #8b3a2b;
+  --border-glass: rgba(0, 0, 0, 0.06);
+  --border-gold: #dcd4c4;
+  --border-gold-bright: #8b3a2b;
 
-  /* Iron-Gall Ink Typography */
-  --text-main: #1f1814;       /* Deep iron gall ink */
-  --text-muted: #544437;      /* Warm sepia note */
-  --text-dim: #7f6e5e;        /* Faded marginalia */
-  --text-inverse: #fffdf9;
+  /* Editorial Print Carbon Ink */
+  --text-main: #24211e;       /* Deep editorial charcoal */
+  --text-muted: #68625a;      /* Soft footnote */
+  --text-dim: #988f83;        /* Faded page note */
+  --text-inverse: #faf7f0;
 
-  /* Royal Crimson Wax Seal & Gold Leaf */
-  --accent-primary: #851e2d;
-  --accent-primary-hover: #6e1724;
-  --accent-primary-light: #a4283b;
-  --accent-secondary: #a8782a;
-  --accent-gold: #a8782a;
-  --accent-gradient: linear-gradient(135deg, #851e2d 0%, #b88a38 50%, #6e1724 100%);
-  --accent-gradient-subtle: linear-gradient(135deg, rgba(133, 30, 45, 0.14) 0%, rgba(184, 138, 56, 0.16) 100%);
-  --accent-glow: rgba(197, 160, 89, 0.3);
+  /* Organic Terracotta & Bookplate Amber */
+  --accent-primary: #8b3a2b;
+  --accent-primary-hover: #732f22;
+  --accent-primary-light: #a64c3c;
+  --accent-secondary: #b37c2a;
+  --accent-gold: #b37c2a;
+  --accent-gradient: linear-gradient(135deg, #8b3a2b 0%, #b37c2a 100%);
+  --accent-gradient-subtle: rgba(139, 58, 43, 0.08);
+  --accent-glow: rgba(139, 58, 43, 0.15);
 
-  --pair-active-bg: rgba(197, 160, 89, 0.22);
-  --pair-active-border: #a8782a;
-  --pair-hover-bg: rgba(197, 160, 89, 0.09);
+  /* Subtle highlighter wash on book page */
+  --pair-active-bg: #ede6d4;
+  --pair-active-border: #8b3a2b;
+  --pair-hover-bg: rgba(0, 0, 0, 0.015);
 
-  --shadow-sm: 0 1px 3px rgba(31, 24, 20, 0.1);
-  --shadow-md: 0 4px 8px -1px rgba(31, 24, 20, 0.12), 0 2px 4px -2px rgba(31, 24, 20, 0.08);
-  --shadow-lg: 0 12px 24px -4px rgba(31, 24, 20, 0.16);
-  --shadow-glow: 0 0 22px rgba(197, 160, 89, 0.28);
-
-  /* Academic Background - Parchment Rules */
-  --bg-grid-line: rgba(184, 138, 56, 0.08);
-  --bg-grid-strong: rgba(184, 138, 56, 0.14);
-  --bg-paper-rule: rgba(31, 24, 20, 0.04);
-  --bg-dot: rgba(184, 138, 56, 0.12);
-  --bg-ornament: rgba(184, 138, 56, 0.14);
-  --bg-glow-a: rgba(197, 160, 89, 0.12);
-  --bg-glow-b: rgba(133, 30, 45, 0.08);
-  --bg-glow-c: rgba(197, 160, 89, 0.06);
+  --shadow-sm: 0 1px 2px rgba(36, 33, 30, 0.05);
+  --shadow-md: 0 3px 6px -1px rgba(36, 33, 30, 0.07);
+  --shadow-lg: 0 10px 24px -4px rgba(36, 33, 30, 0.1);
+  --shadow-glow: 0 0 14px rgba(139, 58, 43, 0.15);
 }
