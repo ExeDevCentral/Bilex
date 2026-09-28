@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { 
-  UploadCloud, 
+  BookOpen, 
   FileText, 
   Image as ImageIcon, 
   Sparkles, 
@@ -176,33 +176,34 @@ export const DropzoneUpload: React.FC<DropzoneUploadProps> = ({
         />
 
         <div className="dropzone-content">
-          <div className="dropzone-icon-wrap">
-            <UploadCloud size={38} />
+          <div className="dropzone-icon-wrap" title="El Umbral del Manuscrito">
+            <BookOpen size={36} className="brand-icon-primary" />
+            <Sparkles size={16} className="dropzone-quill-ornament" />
           </div>
 
           <h2 className="dropzone-title">
-            Arrastrá tu <span className="gradient-text">PDF o una/varias fotos</span> aquí
+            Deposita aquí tu <span className="gradient-text">Manuscrito o Códice</span>
           </h2>
           <p className="dropzone-desc">
-            Si subís varias fotos, las compilamos automáticamente en un único PDF ordenado con OCR.
+            Arrastra tu tomo en PDF o fotografías de folios (JPG, PNG, WebP). Realizamos compilación, OCR de escriba y lectura bilingüe verso a verso.
           </p>
 
           <div className="dropzone-pills">
             <span className="dropzone-pill">
               <FileText size={12} style={{ display: 'inline', marginRight: 4 }} />
-              PDF (Digital y Escaneado)
+              Códices PDF (Digital o Impreso)
             </span>
             <span className="dropzone-pill">
               <ImageIcon size={12} style={{ display: 'inline', marginRight: 4 }} />
-              Múltiples Fotos (JPG / PNG / WebP)
+              Folios en Imágenes Sueltas
             </span>
             <span className="dropzone-pill">
               <Layers size={12} style={{ display: 'inline', marginRight: 4 }} />
-              Reordenador de páginas
+              Compilador de Páginas
             </span>
             <span className="dropzone-pill">
               <Sparkles size={12} style={{ display: 'inline', marginRight: 4 }} />
-              OCR WebAssembly en el Browser
+              OCR en el Navegador
             </span>
           </div>
         </div>
