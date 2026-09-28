@@ -6,7 +6,8 @@ import {
   Sun, 
   Moon, 
   ArrowLeftRight, 
-  FilePlus2
+  FilePlus2,
+  Feather
 } from 'lucide-react';
 import { SUPPORTED_LANGUAGES } from '../constants/languages';
 import type { TranslationConfig } from '../types';
@@ -46,25 +47,27 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="app-header">
       <div className="brand-section">
-        <div className="brand-logo-icon">
-          <BookOpen size={22} />
+        <div className="brand-logo-icon" title="Códice Bilex">
+          <BookOpen size={20} className="brand-icon-primary" />
+          <Feather size={12} className="brand-icon-quill" />
         </div>
-        <div>
+        <div className="brand-text-container">
           <h1 className="brand-title">
-            Bi<span className="gradient-text">lex</span>
+            BI<span className="brand-title-accent">LEX</span>
           </h1>
-          <p className="brand-subtitle">Lectura y Traducción Bilingüe</p>
+          <p className="brand-subtitle">Traductor Bilingüe &amp; Lector de Códices</p>
         </div>
       </div>
 
       {/* Language Selector in Header */}
-      <div className="lang-selector-group">
+      <div className="lang-selector-group" role="group" aria-label="Selección de Idiomas">
         <select
           className="lang-select"
           value={config.sourceLang}
           onChange={(e) => onConfigChange({ ...config, sourceLang: e.target.value })}
           disabled={isProcessing}
-          title="Idioma de origen"
+          title="Idioma del texto original"
+          aria-label="Idioma de origen"
         >
           <option value="AUTO">✨ Auto-detectar</option>
           {SUPPORTED_LANGUAGES.map((lang) => (
@@ -75,10 +78,12 @@ export const Header: React.FC<HeaderProps> = ({
         </select>
 
         <button
+          type="button"
           className="lang-swap-btn"
           onClick={handleSwapLanguages}
           disabled={isProcessing || config.sourceLang === 'AUTO'}
-          title="Intercambiar idiomas"
+          title="Intercambiar idiomas de traducción"
+          aria-label="Intercambiar idiomas"
         >
           <ArrowLeftRight size={14} />
         </button>
@@ -88,7 +93,8 @@ export const Header: React.FC<HeaderProps> = ({
           value={config.targetLang}
           onChange={(e) => onConfigChange({ ...config, targetLang: e.target.value })}
           disabled={isProcessing}
-          title="Idioma destino"
+          title="Idioma de la traducción"
+          aria-label="Idioma destino"
         >
           {SUPPORTED_LANGUAGES.map((lang) => (
             <option key={lang.code} value={lang.code}>
@@ -103,41 +109,47 @@ export const Header: React.FC<HeaderProps> = ({
         {hasDocument && (
           <>
             <button
-              className="btn btn-secondary"
+              type="button"
+              className="btn btn-secondary header-action-btn"
               onClick={onNewDocument}
               disabled={isProcessing}
-              title="Cargar otro documento"
+              title="Cargar otro documento o tomo"
             >
               <FilePlus2 size={16} />
-              <span>Nuevo</span>
+              <span className="btn-label-responsive">Nuevo</span>
             </button>
 
             <button
-              className="btn btn-primary"
+              type="button"
+              className="btn btn-primary header-action-btn"
               onClick={onOpenExport}
               disabled={isProcessing}
-              title="Exportar traducción y documento bilingüe"
+              title="Exportar traducción a compendio PDF bilingüe"
             >
               <Download size={16} />
-              <span>Exportar</span>
+              <span className="btn-label-responsive">Exportar</span>
             </button>
           </>
         )}
 
         <button
-          className="btn btn-secondary btn-icon"
+          type="button"
+          className="btn btn-secondary btn-icon theme-toggle-btn"
           onClick={onToggleTheme}
-          title={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+          title={theme === 'dark' ? 'Cambiar a Pergamino Real (Modo Día)' : 'Cambiar a Cuarto de Medianoche (Modo Noche)'}
+          aria-label={theme === 'dark' ? 'Activar modo pergamino claro' : 'Activar modo cuarto nocturno'}
         >
-          {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          {theme === 'dark' ? <Sun size={17} className="icon-sun" /> : <Moon size={17} className="icon-moon" />}
         </button>
 
         <button
+          type="button"
           className="btn btn-secondary btn-icon"
           onClick={onOpenSettings}
-          title="Configuración de APIs de Traducción"
+          title="Configuración de Motores de Traducción"
+          aria-label="Abrir configuración"
         >
-          <Settings size={18} />
+          <Settings size={17} />
         </button>
       </div>
     </header>

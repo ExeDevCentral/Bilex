@@ -1,4 +1,4 @@
-/* Header / Navbar */
+/* Renaissance Frontispiece Header / Navbar */
 .app-header {
   position: sticky;
   top: 0;
@@ -8,40 +8,68 @@
   justify-content: space-between;
   padding: 12px 24px;
   background: var(--bg-surface-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border-glass);
-  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 2px solid var(--border-gold);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
 }
 
 .brand-section {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .brand-logo-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-md);
-  background: var(--accent-gradient);
-  color: #ffffff;
-  box-shadow: var(--shadow-glow);
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-gold);
+  color: var(--accent-gold);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), inset 0 0 6px rgba(184, 138, 56, 0.2);
+}
+
+.brand-icon-primary {
+  color: var(--border-gold-bright);
+}
+
+.brand-icon-quill {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  color: var(--accent-primary);
+}
+
+.brand-text-container {
+  display: flex;
+  flex-direction: column;
 }
 
 .brand-title {
-  font-size: 1.25rem;
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
   font-weight: 800;
-  letter-spacing: -0.5px;
+  letter-spacing: 2px;
   color: var(--text-main);
+  line-height: 1.1;
+}
+
+.brand-title-accent {
+  color: var(--accent-primary);
+  text-shadow: 0 0 12px var(--accent-glow);
 }
 
 .brand-subtitle {
-  font-size: 0.75rem;
+  font-family: var(--font-reading);
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
   color: var(--text-muted);
+  font-style: italic;
 }
 
 .header-actions {
@@ -50,24 +78,26 @@
   gap: 10px;
 }
 
-/* Language Switcher Bar */
+/* Renaissance Language Switcher Bar */
 .lang-selector-group {
   display: flex;
   align-items: center;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-full);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-sm);
   padding: 4px 8px;
   gap: 6px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .lang-select {
   background: transparent;
   border: none;
   color: var(--text-main);
-  font-family: inherit;
-  font-size: 0.85rem;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
   font-weight: 600;
+  letter-spacing: 0.5px;
   cursor: pointer;
   outline: none;
   padding: 4px 6px;
@@ -75,7 +105,7 @@
 }
 
 .lang-select option {
-  background: var(--bg-secondary);
+  background: var(--bg-surface-elevated);
   color: var(--text-main);
 }
 
@@ -83,19 +113,48 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-surface);
+  background: var(--bg-surface-elevated);
   border: 1px solid var(--border-subtle);
-  color: var(--text-muted);
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
+  color: var(--accent-gold);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: transform var(--transition-fast), color var(--transition-fast);
+  transition: transform var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
 }
 
-.lang-swap-btn:hover {
-  color: var(--accent-primary-light);
+.lang-swap-btn:hover:not(:disabled) {
+  color: var(--text-main);
+  border-color: var(--border-gold);
   transform: rotate(180deg);
+}
+
+.theme-toggle-btn {
+  color: var(--accent-gold);
+}
+
+.theme-toggle-btn:hover {
+  color: var(--border-gold-bright);
+}
+
+@media (max-width: 680px) {
+  .brand-subtitle {
+    display: none;
+  }
+  .btn-label-responsive {
+    display: none;
+  }
+  .app-header {
+    padding: 10px 14px;
+  }
+  .lang-selector-group {
+    padding: 2px 4px;
+    gap: 2px;
+  }
+  .lang-select {
+    font-size: 0.75rem;
+    max-width: 100px;
+  }
 }
 
 /* Buttons */
@@ -105,10 +164,12 @@
   justify-content: center;
   gap: 8px;
   padding: 8px 16px;
-  border-radius: var(--radius-md);
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: 600;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all var(--transition-fast);
   border: 1px solid transparent;
@@ -118,31 +179,36 @@
 }
 
 .btn:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
 .btn-primary {
   background: var(--accent-gradient);
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+  border: 1px solid var(--border-gold);
+  color: #fffdf9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 .btn-primary:hover:not(:disabled) {
   opacity: 0.95;
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.5);
+  box-shadow: 0 4px 14px var(--accent-glow);
+  border-color: var(--border-gold-bright);
 }
 
 .btn-secondary {
-  background: var(--bg-surface);
+  background: var(--bg-surface-elevated);
   color: var(--text-main);
-  border-color: var(--border-subtle);
+  border: 1px solid var(--border-gold);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .btn-secondary:hover:not(:disabled) {
   background: var(--bg-hover);
-  border-color: var(--accent-primary-light);
+  border-color: var(--border-gold-bright);
+  color: var(--text-main);
 }
 
 .btn-ghost {
@@ -156,10 +222,11 @@
 }
 
 .btn-icon {
-  padding: 8px;
+  padding: 7px;
   width: 36px;
   height: 36px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-gold);
 }
 
 /* Dropzone Upload */
