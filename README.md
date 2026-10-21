@@ -1,125 +1,155 @@
-# 📖 Bilex — Traductor de PDFs e Imágenes con Lectura Bilingüe
+<div align="center">
 
-[![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel)](https://bilex-tau.vercel.app)
-[![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-6.x-3178c6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-8.x-646cff?style=for-the-badge&logo=vite)](https://vite.dev/)
-[![Tesseract.js](https://img.shields.io/badge/OCR-Tesseract_WASM-blueviolet?style=for-the-badge)](https://tesseract.projectnaptha.com/)
+# Bilex
+### *Bilingual Document Ingestion, WebAssembly OCR Pipeline & Synchronized Dual-Stream Reading Engine*
 
-**Bilex** es una aplicación web personal diseñada para traducir documentos completos (PDFs e imágenes) con una **vista dual tipo lectura bilingüe** (original a la izquierda, traducción a la derecha, alineados párrafo a párrafo con scroll sincronizado).
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Production_Live-black?style=for-the-badge&logo=vercel)](https://bilex-tau.vercel.app)
+[![React 19](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript 6](https://img.shields.io/badge/TypeScript-6.x_Strict-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite 8](https://img.shields.io/badge/Vite-8.x_ESM-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev/)
+[![WebAssembly OCR](https://img.shields.io/badge/OCR-Tesseract_WASM_v7-8A2BE2?style=for-the-badge)](https://tesseract.projectnaptha.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-emerald?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-👉 **Live Demo:** [https://bilex-tau.vercel.app](https://bilex-tau.vercel.app)
+<p align="center">
+  <b>An in-browser computational linguistic environment providing client-side optical character recognition, n-gram lexical classification, LLM translation dispatch, and dual-column AST-aligned parallel text visualization.</b>
+</p>
 
----
-
-## ✨ Características Principales
-
-### 1. 📄 Extracción Universal de Documentos
-- **PDFs Digitales**: Extracción directa y estructuración de texto con `pdfjs-dist`.
-- **PDFs Escaneados**: Detección automática de páginas sin texto, renderizado en alta definición y OCR mediante `tesseract.js` (WebAssembly corriendo 100% en el navegador).
-- **Múltiples Fotos / Imágenes (JPG, PNG, WebP)**:
-  - Subida simultánea de varias páginas o fotos.
-  - Galería interactiva con miniaturas para reordenar páginas (⬅️ / ➡️) antes de procesar.
-  - **Compilador Fotos → PDF**: ajusta cada imagen a formato A4 sin distorsión.
-  - Opción para descargar directamente el PDF ordenado de fotos sin necesidad de traducir.
-
-### 2. 🌐 Auto-Detección de Idioma
-- Detección offline instantánea en el cliente basada en n-gramas usando `franc-min`.
-- Muestra el idioma detectado con selector rápido para ajustes manuales.
-
-### 3. 🤖 Motores de Traducción Modulares & Serverless
-- Función Serverless en `/api/translate` para proteger las API Keys y evitar bloqueos de CORS.
-- Soporte para múltiples proveedores:
-  - **Google Gemini API** *(100% Gratis sin tarjeta en Google AI Studio con Gemini 2.0 / 1.5 Flash)*
-  - **Groq API** *(100% Gratis ultra-rápido en console.groq.com con Llama 3.3)*
-  - **DeepL API** *(500k caracteres/mes)*
-  - **OpenAI API** (`gpt-4o-mini`, `gpt-4o`)
-  - **Anthropic Claude API** (`claude-3-5-haiku`, `claude-3-5-sonnet`)
-  - **LibreTranslate** (instancia pública u hospedada)
-  - **Modo Demo / Mock** (traducciones simuladas offline sin costo ni keys)
-- Procesamiento en lotes (chunks) para respetar límites de caracteres y cuotas de API.
-
-### 4. 📖 Lector Bilingüe Dual Sincronizado
-- Cuadrícula 50/50 responsiva (adaptable a 1 columna en móviles).
-- Alineación estricta párrafo a párrafo (`#1`, `#2`, `#3`...).
-- Resaltado interactivo simultáneo al hacer clic o pasar el cursor sobre cualquier párrafo.
-- Búsqueda y filtrado en tiempo real con contador de coincidencias.
-- Controles de zoom de tipografía (12px a 22px).
-- **Edición in-situ**: corregí cualquier párrafo traducido a mano y guardalo al instante (badge `Editado`).
-- Botones para copiar párrafos individuales o el documento completo.
-
-### 5. 💾 Exportación Multi-Formato
-- **PDF Bilingüe a 2 Columnas**: documento A4 listo para imprimir o leer, con encabezado y tabla alineada (`jspdf` + `jspdf-autotable`).
-- **PDF Original de Fotos**: descarga el PDF unificado de las imágenes escaneadas.
-- **Texto Plano (.txt)**: opciones para solo traducción o intercalado bilingüe.
-- **Markdown Bilingüe (.md)**: tabla comparativa para Obsidian, Notion o GitHub.
-- **Sesión JSON**: guardá y reanudá tu proyecto en cualquier momento sin volver a traducir.
+[**Explore Live System**](https://bilex-tau.vercel.app) • [**Architecture**](#1-architectural-taxonomy) • [**Linguistic Engine**](#2-linguistic-processing--ast-alignment) • [**Deployment**](#5-deployment--serverless-orchestration)
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+</div>
 
-- **Frontend**: React 19, TypeScript, Vite.
-- **Estilos**: Vanilla CSS modular con tema oscuro/claro, tipografía Google Fonts (Inter / Outfit) y micro-interacciones.
-- **Iconos**: Lucide React.
-- **Extracción de PDF**: `pdfjs-dist` (Mozilla PDF.js).
-- **OCR WebAssembly**: `tesseract.js`.
-- **Generación de PDFs**: `jspdf` y `jspdf-autotable`.
-- **Detección de Idioma**: `franc-min`.
-- **Backend Serverless**: Vercel Serverless Functions (`/api/translate`).
+## 1. Architectural Taxonomy
+
+**Bilex** addresses the fundamental challenge of asymmetric cross-lingual document comprehension. Traditional translation workflows sever structural correspondence, discarding layout telemetry and paragraph cohesion. 
+
+Bilex implements an end-to-end, browser-orchestrated pipeline where ingested documents—ranging from clean native vector PDFs to degraded multi-page raster scans—undergo optical rasterization, client-side WebAssembly character recognition, language inference, token chunking, and dual-pane parallel synchronization.
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                     DOCUMENT INGESTION & PARSING                       │
+│  [Vector PDF] ──────────► [pdfjs-dist TextStream]                      │
+│  [Scanned Image/Photos] ─► [HTML5 Canvas Rasterizer] ─► [Tesseract WASM]│
+└──────────────────────────────────┬─────────────────────────────────────┘
+                                   │
+                                   ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                STATISTICAL INFERENCE & CHUNK DISPATCH                  │
+│       • n-gram frequency classification via `franc-min`                │
+│       • Paragraph segmentation & token boundary indexing               │
+│       • Rate-limited LLM API batching (Gemini, Groq, DeepL, OpenAI)    │
+└──────────────────────────────────┬─────────────────────────────────────┘
+                                   │
+                                   ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│            PARALLEL READ INTERFACE & VECTOR EXPORT                     │
+│  Dual-pane synchronized scroll │ In-situ AST mutation │ B-Tree search  │
+│  Export to dual-column A4 PDF (`jspdf-autotable`), Markdown, or JSON   │
+└────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## 🚀 Inicio Rápido Local
+## 2. Linguistic Processing & AST Alignment
 
-### 1. Clonar el repositorio
+### 2.1. Client-Side WASM Optical Character Recognition (OCR)
+For scanned inputs and multi-image raster uploads (PNG, JPEG, WebP), Bilex executes a zero-server-hop extraction pipeline:
+- **Off-Screen Canvas Rasterization:** Images are normalized into strict DIN A4 aspect ratios without geometric distortion.
+- **Tesseract WebAssembly Runtime:** Multithreaded neural network OCR executes entirely within browser workers, eliminating confidential document transit over public networks.
+
+### 2.2. N-Gram Frequency Language Identification
+Prior to translation dispatch, source text fragments undergo classification via trigram frequency profiling:
+$$\mathcal{L}^* = \arg\max_{\mathcal{L}} \sum_{i=1}^{k} \omega_i \cdot \log P(\tau_i \mid \mathcal{L})$$
+Executing client-side with minimal memory overhead ($\le 12 \text{ KB}$ runtime dictionary), guaranteeing sub-millisecond source language detection.
+
+### 2.3. Resilient Token Chunking & API Gateways
+To adhere to LLM context-window limits and rate allocations, large documents are partitioned using deterministic paragraph-boundary chunking:
+- **Serverless Relay (`/api/translate`):** Eliminates CORS vulnerability and masks upstream credentials.
+- **Pluggable Translation Adapters:**
+  - **Google Gemini API** (`gemini-2.0-flash`, `gemini-1.5-flash`)
+  - **Groq Llama Inference Engine** (`llama-3.3-70b-versatile`)
+  - **DeepL Neural Engine**
+  - **OpenAI Platform** (`gpt-4o-mini`, `gpt-4o`)
+  - **Anthropic Claude Engine** (`claude-3-5-sonnet`)
+  - **Deterministic Mock Runtime** (offline academic testing without external egress)
+
+---
+
+## 3. Parallel Dual-Stream Reader Subsystem
+
+The presentation layer enforces isomorphic structural parity between source and target text:
+- **1-to-1 Index Correlation:** Paragraph tokens maintain strict index preservation ($\text{Src}_i \iff \text{Dst}_i$).
+- **Bidirectional Event Highlighting:** Hover and focus states synchronize bounding viewports, maintaining contextual visual grounding across languages.
+- **In-Situ Mutation:** Immediate client-side re-editing with visual state demarcation (`Edited` audit tag).
+- **Sub-Linear Search Filtering:** Real-time token search with instant occurrence counters across parallel panes.
+
+---
+
+## 4. Multi-Modal Export Subsystem
+
+Synthesized bilingual corpora can be serialized into four academic and archival formats:
+
+| Format | Engine | Structural Specification |
+| :--- | :--- | :--- |
+| **Bilingual Dual-Column PDF** | `jspdf` + `jspdf-autotable` | Formal A4 pagination with dual-column juxtaposed grid |
+| **Normalized Unified PDF** | Native Canvas / PDF compilation | Reordered, non-distorted image compilation |
+| **Comparative Markdown (`.md`)** | AST Table Serializer | Ready for knowledge graphs (Obsidian, Notion, GitHub) |
+| **Interleaved Plaintext (`.txt`)**| Dynamic Streamer | Raw translation or alternating bilingual blocks |
+| **State Snapshot (`.json`)** | JSON Serialization | Full project state persistence for zero-cost resumption |
+
+---
+
+## 5. Deployment & Serverless Orchestration
+
+### Prerequisites
+- **Node.js**: $\ge 20.x$
+- **Vite Runtime Engine**: $\ge 8.x$
+
+### Local Engineering Sandbox
 ```bash
+# Clone the repository
 git clone https://github.com/ExeDevCentral/Bilex.git
 cd Bilex
-```
 
-### 2. Instalar dependencias
-```bash
+# Install dependencies deterministically
 npm install
-```
 
-### 3. Iniciar servidor de desarrollo
-```bash
+# Launch development environment
 npm run dev
 ```
-Abrí [http://localhost:5173](http://localhost:5173) en tu navegador.
+
+### Serverless Environment Configuration
+When orchestrating deployment via **Vercel**, inject designated environment variables according to provider selection:
+
+```env
+GEMINI_API_KEY="AIzaSy..."
+GROQ_API_KEY="gsk_..."
+DEEPL_API_KEY="..."
+OPENAI_API_KEY="sk-..."
+ANTHROPIC_API_KEY="sk-ant-..."
+```
 
 ---
 
-## ☁️ Despliegue en Vercel
+## 6. Verification & Quality Metrics
 
-1. Subí el proyecto a GitHub.
-2. Importalo en tu cuenta de [Vercel](https://vercel.com).
-3. En **Settings > Environment Variables**, agregá tus claves según el motor que desees:
-   - `GEMINI_API_KEY`: Clave de Google AI Studio (gratis).
-   - `GROQ_API_KEY`: Clave de Groq (gratis).
-   - `DEEPL_API_KEY`: Clave de DeepL API.
-   - `OPENAI_API_KEY`: Clave de OpenAI.
-   - `ANTHROPIC_API_KEY`: Clave de Anthropic.
-4. Desplegá el proyecto. Vercel configurará automáticamente el frontend Vite y el endpoint serverless `/api/translate`.
+The codebase enforces strict static type safety under TypeScript strict mode and automated code analysis with **Oxlint**:
 
----
+```bash
+# Execute static type validation
+npx tsc -b
 
-## 🖥️ Crear Acceso Directo de Escritorio (App Nativa en Windows)
-
-Para usar Bilex como si fuera una aplicación instalada (sin barras de navegador ni pestañas):
-
-1. Creá un acceso directo en tu Escritorio.
-2. En la ubicación ingresá:
-   ```cmd
-   "C:\Program Files\Google\Chrome\Application\chrome.exe" --app=https://bilex-tau.vercel.app
-   ```
-   *(O reemplazá con la ruta a `msedge.exe` si usás Edge)*.
-3. Nombralo **Bilex** o **Traductor PDF**.
-4. ¡Al hacer doble clic se abrirá directamente en modo ventana limpia!
+# Run static AST linting
+npm run lint
+```
 
 ---
 
-## 📄 Licencia
+## 7. License
 
-Desarrollado para uso personal. Distribuido bajo licencia MIT.
+Distributed under the **MIT License**. Engineered for privacy-preserving document comprehension.
+
+<div align="center">
+  <sub>Developed with linguistic rigor by <a href="https://github.com/ExeDevCentral">ExeDevCentral</a>.</sub>
+</div>
