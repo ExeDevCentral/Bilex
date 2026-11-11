@@ -1,4 +1,4 @@
-name: Quality & Sanity Check
+name: CI & Quality Pipeline
 
 on:
   push:
@@ -7,13 +7,25 @@ on:
     branches: [ main, master ]
 
 jobs:
-  audit:
+  verify:
+    name: Build & Lint Verification
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Basic Tree & Syntax Audit
-        run: |
-          echo "Auditing repository integrity at $(date -u)"
-          git status --short
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Oxlint Static Analysis
+        run: npm run lint
+
+      - name: Typecheck and Production Build
+        run: npm run build
+
