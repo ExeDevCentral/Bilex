@@ -1,3 +1,23 @@
 @import './styles/variables.css';
 @import './styles/main.css';
 @import './styles/components.css';
+
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--accent, #8b3a2b);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 0 0 0.5rem 0;
+  text-decoration: none;
+}
+
+.skip-to-content:focus {
+  left: 0.75rem;
+  top: 0.75rem;
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}

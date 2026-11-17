@@ -320,6 +320,9 @@ export const App: React.FC = () => {
 
   return (
     <div className="app-container">
+      <a href="#main-content" className="skip-to-content">
+        Saltar al contenido principal
+      </a>
       {/* Top Navbar */}
       <Header
         config={config}
@@ -334,7 +337,11 @@ export const App: React.FC = () => {
       />
 
       {/* Main Content Area */}
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 2 }}>
+      <main
+        id="main-content"
+        tabIndex={-1}
+        style={{ flex: 1, display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 2 }}
+      >
         {/* State 1: Dropzone Upload */}
         {!metadata && processingState.stage === 'idle' && (
           <DropzoneUpload
