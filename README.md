@@ -134,14 +134,20 @@ ANTHROPIC_API_KEY="sk-ant-..."
 
 ## 6. Verification & Quality Metrics
 
-The codebase enforces strict static type safety under TypeScript strict mode and automated code analysis with **Oxlint**:
+The codebase enforces strict static type safety under TypeScript strict mode, automated code analysis with **Oxlint**, and unit tests via Node's native test runner:
 
 ```bash
+# Execute unit test suite (parser, language detector, export formatters)
+npm test
+
 # Execute static type validation
 npx tsc -b
 
 # Run static AST linting
 npm run lint
+
+# Build production bundle
+npm run build
 ```
 
 ---
