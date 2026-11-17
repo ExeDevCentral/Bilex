@@ -1,5 +1,21 @@
 import type { ParagraphPair } from '../types';
 
+function createParagraphPair(
+  pageNumber: number,
+  index: number,
+  original: string,
+  confidence?: number
+): ParagraphPair {
+  return {
+    id: `p-${pageNumber}-${index}`,
+    pageNumber,
+    original,
+    translated: '',
+    status: 'pending',
+    confidence,
+  };
+}
+
 /**
  * Normalizes raw text from PDF or OCR into well-formed paragraphs
  */
@@ -46,28 +62,14 @@ export function parseRawTextToParagraphs(
         if (currentParagraphLines.length > 0) {
           const content = currentParagraphLines.join(' ').replace(/\s{2,}/g, ' ').trim();
           if (content) {
-            pairs.push({
-              id: `p-${pageNumber}-${currentIndex++}`,
-              pageNumber,
-              original: content,
-              translated: '',
-              status: 'pending',
-              confidence,
-            });
+            pairs.push(createParagraphPair(pageNumber, currentIndex++, content, confidence));
           }
           currentParagraphLines = [];
         }
         currentParagraphLines.push(line);
         if (isHeading) {
           // Push heading as its own paragraph immediately
-          pairs.push({
-            id: `p-${pageNumber}-${currentIndex++}`,
-            pageNumber,
-            original: line,
-            translated: '',
-            status: 'pending',
-            confidence,
-          });
+          pairs.push(createParagraphPair(pageNumber, currentIndex++, line, confidence));
           currentParagraphLines = [];
         }
       } else {
@@ -78,14 +80,7 @@ export function parseRawTextToParagraphs(
     if (currentParagraphLines.length > 0) {
       const content = currentParagraphLines.join(' ').replace(/\s{2,}/g, ' ').trim();
       if (content) {
-        pairs.push({
-          id: `p-${pageNumber}-${currentIndex++}`,
-          pageNumber,
-          original: content,
-          translated: '',
-          status: 'pending',
-          confidence,
-        });
+        pairs.push(createParagraphPair(pageNumber, currentIndex++, content, confidence));
       }
     }
   }
@@ -107,4 +102,14 @@ export function calculateTextStats(pairs: ParagraphPair[]): { charCount: number;
   }
 
   return { charCount, wordCount };
+}
+
+/**
+ * Estimates reading time in whole minutes for a given word count.
+ */
+export function estimateReadingTimeMinutes(wordCount: number, wordsPerMinute = 200): number {
+  if (wordCount <= 0 || wordsPerMinute <= 0) {
+    return 0;
+  }
+  return Math.max(1, Math.ceil(wordCount / wordsPerMinute));
 }
