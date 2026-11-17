@@ -1,6 +1,12 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import type { DocumentMetadata, ParagraphPair, ExportOptions } from '../types';
+import {
+  formatMarkdown,
+  formatPlainText,
+  stripFileExtension,
+  type PlainTextExportMode,
+} from './exportFormatters';
 
 /**
  * Generates and downloads a bilingual dual-column PDF
@@ -81,7 +87,7 @@ export function exportBilingualPDF(
   });
 
   // 4. Save file
-  const baseName = metadata.fileName.replace(/\.[^/.]+$/, '');
+  const baseName = stripFileExtension(metadata.fileName);
   doc.save(`${baseName}_bilingue_bilex.pdf`);
 }
 
@@ -91,30 +97,10 @@ export function exportBilingualPDF(
 export function exportPlainText(
   pairs: ParagraphPair[],
   metadata: DocumentMetadata,
-  mode: 'translated-only' | 'interleaved' | 'side-by-side' = 'translated-only'
+  mode: PlainTextExportMode = 'translated-only'
 ): void {
-  let content = '';
-  const baseName = metadata.fileName.replace(/\.[^/.]+$/, '');
-
-  if (mode === 'translated-only') {
-    content = pairs.map((p) => p.translated || p.original).join('\n\n');
-  } else if (mode === 'interleaved') {
-    content = pairs
-      .map(
-        (p, idx) =>
-          `[Párrafo ${idx + 1}]\nORIGINAL:\n${p.original}\n\nTRADUCCIÓN:\n${p.translated || '[Sin traducción]'}\n${'-'.repeat(40)}`
-      )
-      .join('\n\n');
-  } else {
-    // Side by side text layout
-    content = pairs
-      .map(
-        (p, idx) =>
-          `--- Párrafo ${idx + 1} ---\n[ORIGINAL]:   ${p.original}\n[TRADUCCIÓN]: ${p.translated}`
-      )
-      .join('\n\n');
-  }
-
+  const baseName = stripFileExtension(metadata.fileName);
+  const content = formatPlainText(pairs, mode);
   downloadFile(`${baseName}_${mode}.txt`, content, 'text/plain;charset=utf-8');
 }
 
@@ -122,19 +108,8 @@ export function exportPlainText(
  * Exports bilingual content to Markdown (.md)
  */
 export function exportMarkdown(pairs: ParagraphPair[], metadata: DocumentMetadata): void {
-  const baseName = metadata.fileName.replace(/\.[^/.]+$/, '');
-  let md = `# Traducción Bilingüe: ${metadata.fileName}\n\n`;
-  md += `*Fecha: ${new Date().toLocaleString()} | Palabras: ${metadata.totalWords} | Generado con Bilex*\n\n`;
-  md += `| # | Original | Traducción |\n`;
-  md += `|---|---|---|\n`;
-
-  for (let i = 0; i < pairs.length; i++) {
-    const p = pairs[i];
-    const cleanOrig = p.original.replace(/\|/g, '\\|').replace(/\n/g, '<br/>');
-    const cleanTrans = (p.translated || '').replace(/\|/g, '\\|').replace(/\n/g, '<br/>');
-    md += `| ${i + 1} | ${cleanOrig} | ${cleanTrans} |\n`;
-  }
-
+  const baseName = stripFileExtension(metadata.fileName);
+  const md = formatMarkdown(pairs, metadata);
   downloadFile(`${baseName}_bilingue.md`, md, 'text/markdown;charset=utf-8');
 }
 
@@ -142,7 +117,7 @@ export function exportMarkdown(pairs: ParagraphPair[], metadata: DocumentMetadat
  * Exports the full project state as a JSON file
  */
 export function exportProjectJSON(pairs: ParagraphPair[], metadata: DocumentMetadata): void {
-  const baseName = metadata.fileName.replace(/\.[^/.]+$/, '');
+  const baseName = stripFileExtension(metadata.fileName);
   const data = {
     app: 'Bilex',
     version: '1.0',
