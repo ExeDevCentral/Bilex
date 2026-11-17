@@ -1,5 +1,5 @@
 import { franc } from 'franc-min';
-import { SUPPORTED_LANGUAGES } from '../constants/languages';
+import { SUPPORTED_LANGUAGES } from '../constants/languages.ts';
 
 const ISO3_TO_ISO2: Record<string, string> = {
   eng: 'EN',
