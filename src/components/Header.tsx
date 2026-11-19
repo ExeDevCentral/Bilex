@@ -45,6 +45,7 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
+    <>
     <header className="app-header">
       <div className="brand-section">
         <div className="brand-logo-icon" title="Códice Bilex">
@@ -153,5 +154,57 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
       </div>
     </header>
+
+    {/* Mobile Only Ergonomic Bottom Dock (< 680px) — Minimalista, bien espaciado, cero solapamiento */}
+    <nav className="bilex-mobile-dock" aria-label="Acciones rápidas móviles">
+      <button
+        type="button"
+        className="bilex-dock-btn"
+        onClick={onNewDocument}
+        disabled={isProcessing}
+      >
+        <FilePlus2 size={16} />
+        <span>{hasDocument ? 'Nuevo' : 'Documento'}</span>
+      </button>
+
+      <button
+        type="button"
+        className="bilex-dock-btn"
+        onClick={handleSwapLanguages}
+        disabled={isProcessing || config.sourceLang === 'AUTO'}
+      >
+        <ArrowLeftRight size={16} />
+        <span>Idiomas</span>
+      </button>
+
+      <button
+        type="button"
+        className="bilex-dock-btn bilex-dock-cta"
+        onClick={hasDocument ? onOpenExport : onOpenSettings}
+        disabled={isProcessing}
+      >
+        {hasDocument ? <Download size={16} /> : <Settings size={16} />}
+        <span>{hasDocument ? 'Exportar' : 'Motor IA'}</span>
+      </button>
+
+      <button
+        type="button"
+        className="bilex-dock-btn"
+        onClick={onToggleTheme}
+      >
+        {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+        <span>{theme === 'dark' ? 'Día' : 'Noche'}</span>
+      </button>
+
+      <button
+        type="button"
+        className="bilex-dock-btn"
+        onClick={onOpenSettings}
+      >
+        <Settings size={16} />
+        <span>Ajustes</span>
+      </button>
+    </nav>
+    </>
   );
 };
