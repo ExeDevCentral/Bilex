@@ -150,6 +150,9 @@ npm run lint
 npm run build
 ```
 
+### Mobile Dual-Reader Ergonomics (`< 680px`)
+- **Minimalist Mobile Bottom Dock**: Keeps the mobile top header focused solely on brand and language selection while delegating core actions to a 5-button thumb-zone dock (`Documento`, `Idiomas`, `Exportar / Motor IA`, `Día / Noche`, `Ajustes`) with zero overlap over bilingual text pairs.
+
 ---
 
 ## 7. License
@@ -160,4 +163,4 @@ Distributed under the **MIT License**. Engineered for privacy-preserving documen
   <sub>Developed with linguistic rigor by <a href="https://github.com/ExeDevCentral">ExeDevCentral</a>.</sub>
 </div>
 
-<!-- ExeDevCentral Audit & Quality Stamp: 2026-11-14 (Phase 10/10) -->
+<!-- ExeDevCentral Audit & Quality Stamp: 2026-11-19 (Mobile UX & Zero-Overlap Verification) -->
