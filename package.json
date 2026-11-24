@@ -28,5 +28,12 @@
     "oxlint": "^1.79.0",
     "typescript": "~6.0.2",
     "vite": "^8.2.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ExeDevCentral/Bilex.git"
+  },
+  "homepage": "https://bilex-tau.vercel.app",
+  "description": "sube tu PDF o fotos y las lee en dos idiomas a la vez, lado a lado.",
+  "license": "MIT"
 }

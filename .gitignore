@@ -25,3 +25,7 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# Local environment and build artifacts
+.env
+coverage/
